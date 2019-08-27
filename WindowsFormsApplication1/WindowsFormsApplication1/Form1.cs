@@ -24,7 +24,7 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();            
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
-            corPreenche = Color.Blue;                       
+            corPreenche = Color.Black;                       
         }
 
         private void desenhar_Click(object sender, EventArgs e)
@@ -73,8 +73,15 @@ namespace WindowsFormsApplication1
                     xFinal = x;
                     yFinal = y;
 
-                    areaDesenho.SetPixel(x, y, corPreenche);
-                    imagem.Image = areaDesenho;
+                    DDA();
+
+                    xInicial = null;
+                    yInicial = null;
+
+                    xFinal = null;
+                    yFinal = null;
+                    //areaDesenho.SetPixel(x, y, corPreenche);
+                    //imagem.Image = areaDesenho;
                 }
 
                 txtX.Text = x.ToString();
@@ -82,30 +89,36 @@ namespace WindowsFormsApplication1
             }
         }
 
-        //private void imagem_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (e.Button == MouseButtons.Left)
-        //    {
-        //        int x = e.X;
-        //        int y = e.Y;
+        private void DDA()
+        {
+            double dx = xFinal.Value - xInicial.Value;
+            double dy = yFinal.Value - yInicial.Value;
 
-        //        if (xInicial == null && yInicial == null)
-        //        {
-        //            xInicial = x;
-        //            yInicial = y;
-        //        }
-        //        else
-        //        {
-        //            xFinal = x;
-        //            yFinal = y;
-        //        }
+            int nPassos;
 
-        //        txtX.Text = x.ToString();
-        //        txtY.Text = y.ToString();
+            if(Math.Abs(dx) >= Math.Abs(dy))
+            {
+                nPassos = Convert.ToInt32(Math.Abs(dx));
+            }
+            else
+            {
+                nPassos = Convert.ToInt32(Math.Abs(dy));
+            }
 
-        //        areaDesenho.SetPixel(x, y, corPreenche);
-        //        imagem.Image = areaDesenho;
-        //    }
-        //}
+            double xAdd = dx / nPassos;
+            double yAdd = dy / nPassos;
+
+            double x = xInicial.Value;
+            double y = yInicial.Value;
+
+            for (int i = 0; i < nPassos; i++)
+            {
+                x += xAdd;
+                y += yAdd;
+
+                areaDesenho.SetPixel((int)x, (int)y, corPreenche);
+                imagem.Image = areaDesenho;
+            }
+        }
     }
 }
