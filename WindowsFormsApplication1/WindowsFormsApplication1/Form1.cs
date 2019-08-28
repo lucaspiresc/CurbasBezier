@@ -29,11 +29,17 @@ namespace WindowsFormsApplication1
 
         private void desenhar_Click(object sender, EventArgs e)
         {
-            int x = (int) Convert.ToInt64(txtX.Text);
-            int y = (int) Convert.ToInt64(txtY.Text);
-
-            areaDesenho.SetPixel(x, y, corPreenche);
-            imagem.Image = areaDesenho;
+            int x;
+            int y;
+            if (int.TryParse(txtX.Text, out x) && int.TryParse(txtY.Text, out y))
+            {
+                areaDesenho.SetPixel(x, y, corPreenche);
+                imagem.Image = areaDesenho;
+            }
+            else
+            {
+                MessageBox.Show("Favor preencher as coordenadas X e Y com valores inteiros válidos", "Erro");
+            }
         }
 
         private void btCor_Click(object sender, EventArgs e)

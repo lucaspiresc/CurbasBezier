@@ -124,7 +124,7 @@
             // 
             // desenhar
             // 
-            this.desenhar.Location = new System.Drawing.Point(29, 167);
+            this.desenhar.Location = new System.Drawing.Point(29, 160);
             this.desenhar.Name = "desenhar";
             this.desenhar.Size = new System.Drawing.Size(75, 23);
             this.desenhar.TabIndex = 0;
