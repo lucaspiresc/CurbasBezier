@@ -49,9 +49,6 @@ namespace WindowsFormsApplication1
         {
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
             imagem.Image = areaDesenho;
-
-            txtX.Text = "";
-            txtY.Text = "";
         }
 
         private void imagem_Click(object sender, MouseEventArgs e)
@@ -74,19 +71,34 @@ namespace WindowsFormsApplication1
                     yFinal = y;
 
                     DDA();
-
+                    
+                    //Depois de desenhar a figura, reinicia os pontos final e inicial
                     xInicial = null;
                     yInicial = null;
 
                     xFinal = null;
                     yFinal = null;
-                    //areaDesenho.SetPixel(x, y, corPreenche);
-                    //imagem.Image = areaDesenho;
                 }
-
-                txtX.Text = x.ToString();
-                txtY.Text = y.ToString();
             }
+        }
+
+        private void Translacao(int xT, int yT)
+        {
+            Bitmap novaArea = new Bitmap(areaDesenho.Size.Width, areaDesenho.Size.Height);
+
+            for (int i = 0; i < areaDesenho.Size.Width; i++)
+            {
+                for(int j = 0; j < areaDesenho.Size.Height; j++)
+                {
+                    if (i + xT > 0 && i + xT < areaDesenho.Size.Width && j +yT > 0 && j + yT < areaDesenho.Size.Height)
+                    {
+                        novaArea.SetPixel(i + xT, j + yT, areaDesenho.GetPixel(i, j));
+                    }
+                }
+            }
+
+            areaDesenho = novaArea;
+            imagem.Image = areaDesenho;
         }
 
         private void DDA()
@@ -118,6 +130,20 @@ namespace WindowsFormsApplication1
 
                 areaDesenho.SetPixel((int)x, (int)y, corPreenche);
                 imagem.Image = areaDesenho;
+            }
+        }
+
+        private void Btn_Translado_Click(object sender, EventArgs e)
+        {
+            int x;
+            int y;
+            if (int.TryParse(txtX.Text, out x) && int.TryParse(txtY.Text, out y))
+            {
+                Translacao(x, y);
+            }
+            else
+            {
+                MessageBox.Show("Favor preencher as coordenadas X e Y com valores inteiros válidos", "Erro");
             }
         }
     }

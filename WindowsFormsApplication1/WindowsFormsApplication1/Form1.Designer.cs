@@ -38,6 +38,7 @@
             this.lbX = new System.Windows.Forms.Label();
             this.desenhar = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
+            this.btn_Translado = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
             this.SuspendLayout();
@@ -52,10 +53,10 @@
             this.imagem.TabIndex = 0;
             this.imagem.TabStop = false;
             this.imagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imagem_Click);
-            //this.imagem.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imagem_MouseMove);
             // 
             // painel
             // 
+            this.painel.Controls.Add(this.btn_Translado);
             this.painel.Controls.Add(this.btApagar);
             this.painel.Controls.Add(this.btCor);
             this.painel.Controls.Add(this.txtY);
@@ -71,7 +72,7 @@
             // 
             // btApagar
             // 
-            this.btApagar.Location = new System.Drawing.Point(29, 202);
+            this.btApagar.Location = new System.Drawing.Point(22, 527);
             this.btApagar.Name = "btApagar";
             this.btApagar.Size = new System.Drawing.Size(75, 23);
             this.btApagar.TabIndex = 6;
@@ -81,7 +82,7 @@
             // 
             // btCor
             // 
-            this.btCor.Location = new System.Drawing.Point(29, 163);
+            this.btCor.Location = new System.Drawing.Point(22, 485);
             this.btCor.Name = "btCor";
             this.btCor.Size = new System.Drawing.Size(75, 23);
             this.btCor.TabIndex = 5;
@@ -123,13 +124,23 @@
             // 
             // desenhar
             // 
-            this.desenhar.Location = new System.Drawing.Point(29, 123);
+            this.desenhar.Location = new System.Drawing.Point(29, 167);
             this.desenhar.Name = "desenhar";
             this.desenhar.Size = new System.Drawing.Size(75, 23);
             this.desenhar.TabIndex = 0;
             this.desenhar.Text = "Desenhar";
             this.desenhar.UseVisualStyleBackColor = true;
             this.desenhar.Click += new System.EventHandler(this.desenhar_Click);
+            // 
+            // btn_Translado
+            // 
+            this.btn_Translado.Location = new System.Drawing.Point(29, 121);
+            this.btn_Translado.Name = "btn_Translado";
+            this.btn_Translado.Size = new System.Drawing.Size(75, 23);
+            this.btn_Translado.TabIndex = 7;
+            this.btn_Translado.Text = "Transladar";
+            this.btn_Translado.UseVisualStyleBackColor = true;
+            this.btn_Translado.Click += new System.EventHandler(this.Btn_Translado_Click);
             // 
             // tela
             // 
@@ -159,6 +170,7 @@
         private System.Windows.Forms.Button btApagar;
         private System.Windows.Forms.Button btCor;
         private System.Windows.Forms.ColorDialog cdlg;
+        private System.Windows.Forms.Button btn_Translado;
     }
 }
 
