@@ -181,21 +181,6 @@ namespace WindowsFormsApplication1
 
         #region Eventos
 
-        private void Desenhar_Click(object sender, EventArgs e)
-        {
-            int x;
-            int y;
-            if (int.TryParse(txtX.Text, out x) && int.TryParse(txtY.Text, out y))
-            {
-                areaDesenho.SetPixel(x, y, corPreenche);
-                imagem.Image = areaDesenho;
-            }
-            else
-            {
-                MessageBox.Show("Favor preencher as coordenadas X e Y com valores inteiros válidos", "Erro");
-            }
-        }
-
         private void BtCor_Click(object sender, EventArgs e)
         {
             DialogResult result = cdlg.ShowDialog();
