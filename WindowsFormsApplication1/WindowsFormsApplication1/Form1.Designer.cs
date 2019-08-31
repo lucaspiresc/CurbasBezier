@@ -37,6 +37,9 @@
             this.yFim = new System.Windows.Forms.TextBox();
             this.xInit = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txt_Graus = new System.Windows.Forms.TextBox();
+            this.btn_Rotacionar = new System.Windows.Forms.Button();
             this.txtX = new System.Windows.Forms.TextBox();
             this.btn_Translado = new System.Windows.Forms.Button();
             this.lbX = new System.Windows.Forms.Label();
@@ -48,9 +51,7 @@
             this.yInit = new System.Windows.Forms.TextBox();
             this.btCor = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
-            this.btn_Rotacionar = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txt_Graus = new System.Windows.Forms.TextBox();
+            this.btn_Escala = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -141,6 +142,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn_Escala);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txt_Graus);
             this.groupBox1.Controls.Add(this.btn_Rotacionar);
@@ -155,6 +157,32 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Transformações Geométricas";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 129);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Graus";
+            // 
+            // txt_Graus
+            // 
+            this.txt_Graus.Location = new System.Drawing.Point(7, 145);
+            this.txt_Graus.Name = "txt_Graus";
+            this.txt_Graus.Size = new System.Drawing.Size(68, 20);
+            this.txt_Graus.TabIndex = 10;
+            // 
+            // btn_Rotacionar
+            // 
+            this.btn_Rotacionar.Location = new System.Drawing.Point(101, 142);
+            this.btn_Rotacionar.Name = "btn_Rotacionar";
+            this.btn_Rotacionar.Size = new System.Drawing.Size(75, 23);
+            this.btn_Rotacionar.TabIndex = 8;
+            this.btn_Rotacionar.Text = "Rotacionar";
+            this.btn_Rotacionar.UseVisualStyleBackColor = true;
+            this.btn_Rotacionar.Click += new System.EventHandler(this.Btn_Rotacionar_Click);
             // 
             // txtX
             // 
@@ -244,31 +272,15 @@
             this.btCor.UseVisualStyleBackColor = true;
             this.btCor.Click += new System.EventHandler(this.BtCor_Click);
             // 
-            // btn_Rotacionar
+            // btn_Escala
             // 
-            this.btn_Rotacionar.Location = new System.Drawing.Point(101, 142);
-            this.btn_Rotacionar.Name = "btn_Rotacionar";
-            this.btn_Rotacionar.Size = new System.Drawing.Size(75, 23);
-            this.btn_Rotacionar.TabIndex = 8;
-            this.btn_Rotacionar.Text = "Rotacionar";
-            this.btn_Rotacionar.UseVisualStyleBackColor = true;
-            this.btn_Rotacionar.Click += new System.EventHandler(this.Btn_Rotacionar_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 129);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Graus";
-            // 
-            // txt_Graus
-            // 
-            this.txt_Graus.Location = new System.Drawing.Point(7, 145);
-            this.txt_Graus.Name = "txt_Graus";
-            this.txt_Graus.Size = new System.Drawing.Size(68, 20);
-            this.txt_Graus.TabIndex = 10;
+            this.btn_Escala.Location = new System.Drawing.Point(101, 71);
+            this.btn_Escala.Name = "btn_Escala";
+            this.btn_Escala.Size = new System.Drawing.Size(75, 23);
+            this.btn_Escala.TabIndex = 11;
+            this.btn_Escala.Text = "Escala";
+            this.btn_Escala.UseVisualStyleBackColor = true;
+            this.btn_Escala.Click += new System.EventHandler(this.Btn_Escala_Click);
             // 
             // tela
             // 
@@ -313,6 +325,7 @@
         private System.Windows.Forms.Button btn_Rotacionar;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txt_Graus;
+        private System.Windows.Forms.Button btn_Escala;
     }
 }
 

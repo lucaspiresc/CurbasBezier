@@ -68,7 +68,6 @@ namespace WindowsFormsApplication1
         {
             if (!(xT == 0 & yT == 0))
             {
-
                 // Apaga a reta atual 
                 ApagaReta(x1, y1, x2, y2);
 
@@ -79,6 +78,30 @@ namespace WindowsFormsApplication1
                 SalvarBuffer(x1 + xT, y1 - yT, x2 + xT, y2 - yT);
             }
         }
+
+        public void Escala(int x1, int y1, int x2, int y2, double eX, double eY)
+        {
+            double tempX, tempY;
+
+            // Apaga a reta atual para a inserção de sua nova versão
+            ApagaReta(x1, y1, x2, y2);
+
+            tempX = x2 - x1;
+            tempY = y2 - y1;
+
+            tempX *= eX;
+            tempY *= eY;
+
+            x2 = Convert.ToInt32(tempX) + x1;
+            y2 = Convert.ToInt32(tempY) + y1;
+
+            //Traça a nova reta alterada
+            DDA(x1, y1, x2, y2, corPreenche);
+
+            //Atualiza os valores do buffer
+            SalvarBuffer(x1, y1, x2, y2);
+        }
+
 
         //Aplica a rotação pelo ângulo desejado na ultima reta desenhada
         public void Rotacao(int x1, int y1, int x2, int y2, double angulo)
@@ -139,13 +162,9 @@ namespace WindowsFormsApplication1
                 x += xAdd;
                 y += yAdd;
 
-                try
+                if (x > 0 && x < areaDesenho.Size.Width && y > 0 && y < areaDesenho.Size.Height)
                 {
                     areaDesenho.SetPixel((int)x, (int)y, cor);
-                }
-                catch (Exception e)
-                {
-                    
                 }
             }
             imagem.Image = areaDesenho;
@@ -244,6 +263,27 @@ namespace WindowsFormsApplication1
             }
         }
 
+        private void Btn_Escala_Click(object sender, EventArgs e)
+        {
+            if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
+            {
+                int x;
+                int y;
+                if (int.TryParse(txtX.Text, out x) && int.TryParse(txtY.Text, out y))
+                {
+                    Escala(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, x, y);
+                }
+                else
+                {
+                    MessageBox.Show("Favor preencher as coordenadas X e Y com valores inteiros válidos", "Erro");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
+        }
+
         private void Btn_Rotacionar_Click(object sender, EventArgs e)
         {
             if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
@@ -285,7 +325,5 @@ namespace WindowsFormsApplication1
         }
 
         #endregion
-
-
     }
 }
