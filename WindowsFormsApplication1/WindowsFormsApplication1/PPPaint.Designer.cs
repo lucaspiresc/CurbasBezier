@@ -37,6 +37,7 @@
             this.yFim = new System.Windows.Forms.TextBox();
             this.xInit = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_Escala = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.txt_Graus = new System.Windows.Forms.TextBox();
             this.btn_Rotacionar = new System.Windows.Forms.Button();
@@ -51,10 +52,11 @@
             this.yInit = new System.Windows.Forms.TextBox();
             this.btCor = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
-            this.btn_Escala = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // imagem
@@ -70,17 +72,9 @@
             // 
             // painel
             // 
-            this.painel.Controls.Add(this.btn_dda);
-            this.painel.Controls.Add(this.xFim);
-            this.painel.Controls.Add(this.label3);
-            this.painel.Controls.Add(this.label4);
-            this.painel.Controls.Add(this.yFim);
-            this.painel.Controls.Add(this.xInit);
+            this.painel.Controls.Add(this.groupBox2);
             this.painel.Controls.Add(this.groupBox1);
-            this.painel.Controls.Add(this.label1);
-            this.painel.Controls.Add(this.label2);
             this.painel.Controls.Add(this.btApagar);
-            this.painel.Controls.Add(this.yInit);
             this.painel.Controls.Add(this.btCor);
             this.painel.Dock = System.Windows.Forms.DockStyle.Right;
             this.painel.Location = new System.Drawing.Point(702, 0);
@@ -90,7 +84,7 @@
             // 
             // btn_dda
             // 
-            this.btn_dda.Location = new System.Drawing.Point(29, 330);
+            this.btn_dda.Location = new System.Drawing.Point(9, 125);
             this.btn_dda.Name = "btn_dda";
             this.btn_dda.Size = new System.Drawing.Size(75, 23);
             this.btn_dda.TabIndex = 8;
@@ -101,7 +95,7 @@
             // xFim
             // 
             this.xFim.Enabled = false;
-            this.xFim.Location = new System.Drawing.Point(123, 245);
+            this.xFim.Location = new System.Drawing.Point(103, 40);
             this.xFim.Name = "xFim";
             this.xFim.Size = new System.Drawing.Size(68, 20);
             this.xFim.TabIndex = 14;
@@ -109,7 +103,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(120, 228);
+            this.label3.Location = new System.Drawing.Point(100, 23);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 13);
             this.label3.TabIndex = 12;
@@ -118,7 +112,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(120, 268);
+            this.label4.Location = new System.Drawing.Point(100, 63);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 13;
@@ -127,7 +121,7 @@
             // yFim
             // 
             this.yFim.Enabled = false;
-            this.yFim.Location = new System.Drawing.Point(123, 284);
+            this.yFim.Location = new System.Drawing.Point(103, 79);
             this.yFim.Name = "yFim";
             this.yFim.Size = new System.Drawing.Size(68, 20);
             this.yFim.TabIndex = 15;
@@ -135,7 +129,7 @@
             // xInit
             // 
             this.xInit.Enabled = false;
-            this.xInit.Location = new System.Drawing.Point(29, 245);
+            this.xInit.Location = new System.Drawing.Point(9, 40);
             this.xInit.Name = "xInit";
             this.xInit.Size = new System.Drawing.Size(68, 20);
             this.xInit.TabIndex = 10;
@@ -157,6 +151,16 @@
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Transformações Geométricas";
+            // 
+            // btn_Escala
+            // 
+            this.btn_Escala.Location = new System.Drawing.Point(101, 71);
+            this.btn_Escala.Name = "btn_Escala";
+            this.btn_Escala.Size = new System.Drawing.Size(75, 23);
+            this.btn_Escala.TabIndex = 11;
+            this.btn_Escala.Text = "Escala";
+            this.btn_Escala.UseVisualStyleBackColor = true;
+            this.btn_Escala.Click += new System.EventHandler(this.Btn_Escala_Click);
             // 
             // label5
             // 
@@ -229,7 +233,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 228);
+            this.label1.Location = new System.Drawing.Point(6, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 8;
@@ -238,7 +242,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 268);
+            this.label2.Location = new System.Drawing.Point(6, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 9;
@@ -257,7 +261,7 @@
             // yInit
             // 
             this.yInit.Enabled = false;
-            this.yInit.Location = new System.Drawing.Point(29, 284);
+            this.yInit.Location = new System.Drawing.Point(9, 79);
             this.yInit.Name = "yInit";
             this.yInit.Size = new System.Drawing.Size(68, 20);
             this.yInit.TabIndex = 11;
@@ -272,15 +276,23 @@
             this.btCor.UseVisualStyleBackColor = true;
             this.btCor.Click += new System.EventHandler(this.BtCor_Click);
             // 
-            // btn_Escala
+            // groupBox2
             // 
-            this.btn_Escala.Location = new System.Drawing.Point(101, 71);
-            this.btn_Escala.Name = "btn_Escala";
-            this.btn_Escala.Size = new System.Drawing.Size(75, 23);
-            this.btn_Escala.TabIndex = 11;
-            this.btn_Escala.Text = "Escala";
-            this.btn_Escala.UseVisualStyleBackColor = true;
-            this.btn_Escala.Click += new System.EventHandler(this.Btn_Escala_Click);
+            this.groupBox2.Controls.Add(this.btn_dda);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.xFim);
+            this.groupBox2.Controls.Add(this.yInit);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.xInit);
+            this.groupBox2.Controls.Add(this.yFim);
+            this.groupBox2.Location = new System.Drawing.Point(22, 202);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 167);
+            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Retas";
             // 
             // tela
             // 
@@ -293,9 +305,10 @@
             this.Text = "Manipulação Imagem";
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).EndInit();
             this.painel.ResumeLayout(false);
-            this.painel.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -326,6 +339,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txt_Graus;
         private System.Windows.Forms.Button btn_Escala;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 
