@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PPPaint.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,6 +29,11 @@ namespace WindowsFormsApplication1
         int? yInicialBuffer = null;
         int? yFinalBuffer = null;
 
+        //Salva o algoritmo utilizado para desenhar a ultima reta
+        //Isso será utilizado para rodar o mesmo algoritmo na
+        //hora de apagar a reta
+        AlgoritmosReta? algoritmoBuffer = null;
+
         public tela()
         {
             InitializeComponent();            
@@ -52,13 +58,15 @@ namespace WindowsFormsApplication1
         }
 
         //Salva as coordenadas atuais no buffer
-        private void SalvarBuffer(int? x1, int? y1, int? x2, int? y2)
+        private void SalvarBuffer(int? x1, int? y1, int? x2, int? y2, AlgoritmosReta? algoritmo)
         {
             xInicialBuffer = x1;
             yInicialBuffer = y1;
 
             xFinalBuffer = x2;
             yFinalBuffer = y2;
+
+            algoritmoBuffer = algoritmo;
         }
 
         #region Transformacoes Geométricas
@@ -75,7 +83,7 @@ namespace WindowsFormsApplication1
                 DDA(x1 + xT, y1 - yT, x2 + xT, y2 - yT, corPreenche);
 
                 //Atualiza os valores do buffer
-                SalvarBuffer(x1 + xT, y1 - yT, x2 + xT, y2 - yT);
+                SalvarBuffer(x1 + xT, y1 - yT, x2 + xT, y2 - yT, AlgoritmosReta.DDA);
             }
         }
 
@@ -99,9 +107,8 @@ namespace WindowsFormsApplication1
             DDA(x1, y1, x2, y2, corPreenche);
 
             //Atualiza os valores do buffer
-            SalvarBuffer(x1, y1, x2, y2);
+            SalvarBuffer(x1, y1, x2, y2, AlgoritmosReta.DDA);
         }
-
 
         //Aplica a rotação pelo ângulo desejado na ultima reta desenhada
         public void Rotacao(int x1, int y1, int x2, int y2, double angulo)
@@ -127,7 +134,7 @@ namespace WindowsFormsApplication1
             DDA(x1, y1, x2, y2, corPreenche);
 
             //Atualiza os valores do buffer
-            SalvarBuffer(x1, y1, x2, y2);
+            SalvarBuffer(x1, y1, x2, y2, AlgoritmosReta.DDA);
         }
 
         #endregion
@@ -170,11 +177,111 @@ namespace WindowsFormsApplication1
             imagem.Image = areaDesenho;
         }
 
+        // Algoritmo de Bresenham para traçar retas utilizando apenas calculos com números inteiros
+        public void BresenhamReta(int xInicial, int yInicial, int xFinal, int yFinal, Color cor)
+        {
+            double x = xInicial;
+            double y = yInicial;
+
+            int dx = xFinal - xInicial;
+            int dy = yFinal - yInicial;
+
+            int p, xIncr, yIncr, const1, const2;
+
+            if (dx > 0)
+            {
+                xIncr = 1;
+            }
+            else
+            {
+                dx = -dx;
+                xIncr = -1;
+            }
+
+            if (dy > 0)
+            {
+                yIncr = 1;
+            }
+            else
+            {
+                dy = -dy;
+                yIncr = -1;
+            }
+
+            if (x > 0 && x < areaDesenho.Size.Width && y > 0 && y < areaDesenho.Size.Height)
+            {
+                areaDesenho.SetPixel(Convert.ToInt32(x), Convert.ToInt32(y), cor);
+            }
+
+            if (dx > dy)
+            {
+                p = 2 * dy - dx;
+
+                const1 = 2 * dy;
+                const2 = 2 * (dy - dx);
+
+                for (var i = 0; i < dx; i++)
+                {
+                    x += xIncr;
+                    if (p < 0)
+                        p += const1;
+                    else
+                    {
+                        y += yIncr;
+                        p += const2;
+                    }
+
+                    if (x < areaDesenho.Size.Width & y < areaDesenho.Size.Height & x > 0 & y > 0)
+                    {
+                        if (x > 0 && x < areaDesenho.Size.Width && y > 0 && y < areaDesenho.Size.Height)
+                        {
+                            areaDesenho.SetPixel(Convert.ToInt32(x), Convert.ToInt32(y), cor);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                p = 2 * dx - dy;
+                const1 = 2 * dx;
+                const2 = 2 * (dx - dy);
+
+                for (var i = 0; i < dy; i++)
+                {
+                    y += yIncr;
+                    if (p < 0)
+                    {
+                        p += const1;
+                    }
+                    else
+                    {
+                        p += const2;
+                        x += xIncr;
+                    }
+                    if (x < areaDesenho.Size.Width & y < areaDesenho.Size.Height & x > 0 & y > 0)
+                    {
+                        if (x > 0 && x < areaDesenho.Size.Width && y > 0 && y < areaDesenho.Size.Height)
+                        {
+                            areaDesenho.SetPixel(Convert.ToInt32(x), Convert.ToInt32(y), cor);
+                        }
+                    }
+                }
+            }
+            imagem.Image = areaDesenho;
+        }
+
         //Apaga a reta selecionada
         public void ApagaReta(int x1, int y1, int x2, int y2)
         {
             //Traça uma reta da cor do fundo para "excluir" a reta
-            DDA(x1, y1, x2, y2, Color.White);
+            if (algoritmoBuffer.HasValue && algoritmoBuffer.Value == AlgoritmosReta.DDA)
+            {
+                DDA(x1, y1, x2, y2, Color.White);
+            }
+            else if (algoritmoBuffer.HasValue && algoritmoBuffer.Value == AlgoritmosReta.Bresenham)
+            {
+                BresenhamReta(x1, y1, x2, y2, Color.White);
+            } 
         }
 
         #endregion
@@ -196,7 +303,7 @@ namespace WindowsFormsApplication1
             imagem.Image = areaDesenho;
 
             //Limpa o buffer de reta
-            SalvarBuffer(null, null, null, null);
+            SalvarBuffer(null, null, null, null, null);
         }
 
         private void Imagem_Click(object sender, MouseEventArgs e)
@@ -298,7 +405,26 @@ namespace WindowsFormsApplication1
                 DDA(xInicial.Value, yInicial.Value, xFinal.Value, yFinal.Value, corPreenche);
 
                 //Salva as coordendas como a ultima reta desenhada
-                SalvarBuffer(xInicial, yInicial, xFinal, yFinal);
+                SalvarBuffer(xInicial, yInicial, xFinal, yFinal, AlgoritmosReta.DDA);
+
+                //Limpa as coordenadas do painel
+                LimparIndices();
+            }
+            else
+            {
+                MessageBox.Show("Favor preencher as coordenadas inicial e final com valores inteiros válidos", "Erro");
+            }
+        }
+
+        private void Btn_Bresenham_Click(object sender, EventArgs e)
+        {
+            if (xInicial != null && xFinal != null && yInicial != null && yFinal != null)
+            {
+                //Roda o algoritmo
+                BresenhamReta(xInicial.Value, yInicial.Value, xFinal.Value, yFinal.Value, corPreenche);
+
+                //Salva as coordendas como a ultima reta desenhada
+                SalvarBuffer(xInicial, yInicial, xFinal, yFinal, AlgoritmosReta.Bresenham);
 
                 //Limpa as coordenadas do painel
                 LimparIndices();
