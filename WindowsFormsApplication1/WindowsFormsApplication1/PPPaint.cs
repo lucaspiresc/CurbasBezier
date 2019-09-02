@@ -41,57 +41,31 @@ namespace WindowsFormsApplication1
             corPreenche = Color.Black;                       
         }
 
-        //Seta para nulo as coordenadas finais e iniciais depois de rodar algum algorítmo
-        private void LimparIndices()
-        {
-            xInicial = null;
-            xInit.Text = null;
-
-            yInicial = null;
-            yInit.Text = null;
-
-            xFinal = null;
-            xFim.Text = null;
-
-            yFinal = null;
-            yFim.Text = null;
-        }
-
-        //Salva as coordenadas atuais no buffer
-        private void SalvarBuffer(int? x1, int? y1, int? x2, int? y2, AlgoritmosReta? algoritmo)
-        {
-            xInicialBuffer = x1;
-            yInicialBuffer = y1;
-
-            xFinalBuffer = x2;
-            yFinalBuffer = y2;
-
-            algoritmoBuffer = algoritmo;
-        }
-
         #region Transformacoes Geométricas
 
-        //Aplica a translação desejada na ultima reta desenhada
+        /*
+         * Aplica a translação desejada na ultima reta desenhada
+         */
         public void Translacao(int x1, int y1, int x2, int y2, int xT, int yT)
         {
-            if (!(xT == 0 & yT == 0))
-            {
-                // Apaga a reta atual 
-                ApagaReta(x1, y1, x2, y2);
+            //Apaga a reta atual 
+            ApagaReta(x1, y1, x2, y2);
 
-                //Insere a reta alterada
-                DDA(x1 + xT, y1 - yT, x2 + xT, y2 - yT, corPreenche);
+            //Insere a reta alterada
+            DDA(x1 + xT, y1 - yT, x2 + xT, y2 - yT, corPreenche);
 
-                //Atualiza os valores do buffer
-                SalvarBuffer(x1 + xT, y1 - yT, x2 + xT, y2 - yT, AlgoritmosReta.DDA);
-            }
+            //Atualiza os valores do buffer
+            SalvarBuffer(x1 + xT, y1 - yT, x2 + xT, y2 - yT, AlgoritmosReta.DDA);
         }
 
+        /*
+         * Aplica a escala desejada na ultima reta desenhada
+         */
         public void Escala(int x1, int y1, int x2, int y2, double eX, double eY)
         {
             double tempX, tempY;
 
-            // Apaga a reta atual para a inserção de sua nova versão
+            //Apaga a reta atual para a inserção de sua nova versão
             ApagaReta(x1, y1, x2, y2);
 
             tempX = x2 - x1;
@@ -110,7 +84,9 @@ namespace WindowsFormsApplication1
             SalvarBuffer(x1, y1, x2, y2, AlgoritmosReta.DDA);
         }
 
-        //Aplica a rotação pelo ângulo desejado na ultima reta desenhada
+        /*
+         * Aplica a rotação pelo ângulo desejado na ultima reta desenhada
+         */
         public void Rotacao(int x1, int y1, int x2, int y2, double angulo)
         {
             double xfinal, yFinal;
@@ -139,9 +115,14 @@ namespace WindowsFormsApplication1
 
         #endregion
 
+        /*
+         * Região contendo os algoritmos relacionados a desenhos de reta
+         */
         #region Retas
 
-        //Utiliza o algoritmo DDA para desenhar uma reta a partir de seus pontos inicial e final
+        /*
+         * Algoritmo DDA para desenhar uma reta a partir de seus pontos inicial e final
+         */
         private void DDA(int xInicial, int yInicial, int xFinal, int yFinal, Color cor)
         {
             double dx = xFinal - xInicial;
@@ -177,7 +158,9 @@ namespace WindowsFormsApplication1
             imagem.Image = areaDesenho;
         }
 
-        // Algoritmo de Bresenham para traçar retas utilizando apenas calculos com números inteiros
+        /*
+         * Algoritmo de Bresenham para traçar retas utilizando apenas calculos com números inteiros
+         */
         public void BresenhamReta(int xInicial, int yInicial, int xFinal, int yFinal, Color cor)
         {
             double x = xInicial;
@@ -270,10 +253,13 @@ namespace WindowsFormsApplication1
             imagem.Image = areaDesenho;
         }
 
-        //Apaga a reta selecionada
+        /*
+         * Desenha uma reta da cor do fundo do canvas para "excluir" uma reta.
+         * O algoritmo usado para apagar a reta deve ser o mesmo que foi utilizado
+         * para desenha-la.
+         */
         public void ApagaReta(int x1, int y1, int x2, int y2)
         {
-            //Traça uma reta da cor do fundo para "excluir" a reta
             if (algoritmoBuffer.HasValue && algoritmoBuffer.Value == AlgoritmosReta.DDA)
             {
                 DDA(x1, y1, x2, y2, Color.White);
@@ -286,8 +272,16 @@ namespace WindowsFormsApplication1
 
         #endregion
 
+        /*
+         * Regiao que faz o tratamento dos eventos ativados pelo usuario
+         * (Geralmente cliques no canvas ou cliques em botões)
+         */
         #region Eventos
 
+        /*
+         * Evento para tratar o clique no botão do painel de cores,
+         * onde o usuário vai escolher a cor para as formas que ele irá desenhar
+         */ 
         private void BtCor_Click(object sender, EventArgs e)
         {
             DialogResult result = cdlg.ShowDialog();
@@ -297,8 +291,13 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+         * Evento para tratar o clique no botão de apagar,
+         * onde o usuário vai limpar o canvas completamente
+         */ 
         private void BtApagar_Click(object sender, EventArgs e)
         {
+            //limpa o canvas
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
             imagem.Image = areaDesenho;
 
@@ -306,6 +305,11 @@ namespace WindowsFormsApplication1
             SalvarBuffer(null, null, null, null, null);
         }
 
+        /*
+         * Evento para tratar o clique dentro do canvas,
+         * onde serão salvas as coordenadas dos pontos incial e final
+         * necessários para desenhar as formas
+         */ 
         private void Imagem_Click(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -334,6 +338,12 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+         * Evento para tratar o clique no botão da translação,
+         * onde será verificado se o existe uma reta, e se o usuário
+         * entrou com as coordenadas do translado. Estando tudo OK,
+         * executa a translação
+         */
         private void Btn_Translado_Click(object sender, EventArgs e)
         {
             if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
@@ -355,6 +365,12 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+        * Evento para tratar o clique no botão da escala,
+        * onde será verificado se o existe uma reta, e se o usuário
+        * entrou com as coordenadas da escala. Estando tudo OK,
+        * executa a escala
+        */
         private void Btn_Escala_Click(object sender, EventArgs e)
         {
             if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
@@ -376,6 +392,12 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+        * Evento para tratar o clique no botão da rotacao,
+        * onde será verificado se o existe uma reta, e se o usuário
+        * entrou com as coordenadas da rotacao. Estando tudo OK,
+        * executa a rotacao
+        */
         private void Btn_Rotacionar_Click(object sender, EventArgs e)
         {
             if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
@@ -398,6 +420,11 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+        * Evento para tratar o clique no botão de DDA,
+        * onde será verificado  se o usuário entrou com os pontos final e inicial.
+        * Estando tudo OK, executa o algoritmo e desenha a reta
+        */
         private void Btn_dda_Click(object sender, EventArgs e)
         {
             if (xInicial != null && xFinal != null && yInicial != null && yFinal != null) {
@@ -416,6 +443,11 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+        * Evento para tratar o clique no botão de Bresenham para retas,
+        * onde será verificado se o usuário entrou com os pontos final e inicial.
+        * Estando tudo OK, executa o algoritmo e desenha a reta
+        */
         private void Btn_Bresenham_Click(object sender, EventArgs e)
         {
             if (xInicial != null && xFinal != null && yInicial != null && yFinal != null)
@@ -433,6 +465,51 @@ namespace WindowsFormsApplication1
             {
                 MessageBox.Show("Favor preencher as coordenadas inicial e final com valores inteiros válidos", "Erro");
             }
+        }
+
+        /*
+        * Evento para tratar o clique no botão de Bresenham para circunferências,
+        * onde será verificado se o usuário entrou com os pontos final e inicial.
+        * Estando tudo OK, executa o algoritmo e desenha a circunferência
+        */
+        private void Btn_BresCirc_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        /*
+        * Região contendo metodos utilitarios 
+        */
+        #region Uteis
+
+        //Seta para nulo as coordenadas finais e iniciais depois de rodar algum algorítmo
+        private void LimparIndices()
+        {
+            xInicial = null;
+            xInit.Text = null;
+
+            yInicial = null;
+            yInit.Text = null;
+
+            xFinal = null;
+            xFim.Text = null;
+
+            yFinal = null;
+            yFim.Text = null;
+        }
+
+        //Salva as coordenadas atuais no buffer
+        private void SalvarBuffer(int? x1, int? y1, int? x2, int? y2, AlgoritmosReta? algoritmo)
+        {
+            xInicialBuffer = x1;
+            yInicialBuffer = y1;
+
+            xFinalBuffer = x2;
+            yFinalBuffer = y2;
+
+            algoritmoBuffer = algoritmo;
         }
 
         #endregion

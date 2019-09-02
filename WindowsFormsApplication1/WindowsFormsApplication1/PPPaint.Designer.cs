@@ -31,6 +31,7 @@
             this.imagem = new System.Windows.Forms.PictureBox();
             this.painel = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_Bresenham = new System.Windows.Forms.Button();
             this.btn_dda = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.xFim = new System.Windows.Forms.TextBox();
@@ -53,11 +54,15 @@
             this.btApagar = new System.Windows.Forms.Button();
             this.btCor = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
-            this.btn_Bresenham = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btn_BresCirc = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // imagem
@@ -85,8 +90,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btn_Bresenham);
-            this.groupBox2.Controls.Add(this.btn_dda);
+            this.groupBox2.Controls.Add(this.groupBox4);
+            this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.xFim);
             this.groupBox2.Controls.Add(this.yInit);
@@ -97,14 +102,24 @@
             this.groupBox2.Controls.Add(this.yFim);
             this.groupBox2.Location = new System.Drawing.Point(22, 202);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 167);
+            this.groupBox2.Size = new System.Drawing.Size(187, 218);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Retas";
+            this.groupBox2.Text = "Retas e Circunferências ";
+            // 
+            // btn_Bresenham
+            // 
+            this.btn_Bresenham.Location = new System.Drawing.Point(83, 19);
+            this.btn_Bresenham.Name = "btn_Bresenham";
+            this.btn_Bresenham.Size = new System.Drawing.Size(75, 23);
+            this.btn_Bresenham.TabIndex = 16;
+            this.btn_Bresenham.Text = "Bresenham";
+            this.btn_Bresenham.UseVisualStyleBackColor = true;
+            this.btn_Bresenham.Click += new System.EventHandler(this.Btn_Bresenham_Click);
             // 
             // btn_dda
             // 
-            this.btn_dda.Location = new System.Drawing.Point(9, 125);
+            this.btn_dda.Location = new System.Drawing.Point(6, 19);
             this.btn_dda.Name = "btn_dda";
             this.btn_dda.Size = new System.Drawing.Size(75, 23);
             this.btn_dda.TabIndex = 8;
@@ -193,7 +208,7 @@
             this.groupBox1.Controls.Add(this.txtY);
             this.groupBox1.Location = new System.Drawing.Point(22, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 184);
+            this.groupBox1.Size = new System.Drawing.Size(187, 184);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Transformações Geométricas";
@@ -296,15 +311,36 @@
             this.btCor.UseVisualStyleBackColor = true;
             this.btCor.Click += new System.EventHandler(this.BtCor_Click);
             // 
-            // btn_Bresenham
+            // groupBox3
             // 
-            this.btn_Bresenham.Location = new System.Drawing.Point(101, 125);
-            this.btn_Bresenham.Name = "btn_Bresenham";
-            this.btn_Bresenham.Size = new System.Drawing.Size(75, 23);
-            this.btn_Bresenham.TabIndex = 16;
-            this.btn_Bresenham.Text = "Bresenham";
-            this.btn_Bresenham.UseVisualStyleBackColor = true;
-            this.btn_Bresenham.Click += new System.EventHandler(this.Btn_Bresenham_Click);
+            this.groupBox3.Controls.Add(this.btn_Bresenham);
+            this.groupBox3.Controls.Add(this.btn_dda);
+            this.groupBox3.Location = new System.Drawing.Point(7, 105);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(164, 52);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Retas";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btn_BresCirc);
+            this.groupBox4.Location = new System.Drawing.Point(9, 163);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(162, 49);
+            this.groupBox4.TabIndex = 17;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Circunferências ";
+            // 
+            // btn_BresCirc
+            // 
+            this.btn_BresCirc.Location = new System.Drawing.Point(6, 19);
+            this.btn_BresCirc.Name = "btn_BresCirc";
+            this.btn_BresCirc.Size = new System.Drawing.Size(75, 23);
+            this.btn_BresCirc.TabIndex = 17;
+            this.btn_BresCirc.Text = "Bresenham";
+            this.btn_BresCirc.UseVisualStyleBackColor = true;
+            this.btn_BresCirc.Click += new System.EventHandler(this.Btn_BresCirc_Click);
             // 
             // tela
             // 
@@ -321,6 +357,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -353,6 +391,9 @@
         private System.Windows.Forms.Button btn_Escala;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btn_Bresenham;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button btn_BresCirc;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }
 

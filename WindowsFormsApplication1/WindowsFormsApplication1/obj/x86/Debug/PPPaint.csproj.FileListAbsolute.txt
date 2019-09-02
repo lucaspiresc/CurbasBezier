@@ -7,3 +7,12 @@ C:\Users\Lucas\Documents\CG\WindowsFormsApplication1\WindowsFormsApplication1\ob
 C:\Users\Lucas\Documents\CG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.csproj.CoreCompileInputs.cache
 C:\Users\Lucas\Documents\CG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.exe
 C:\Users\Lucas\Documents\CG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.pdb
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\PPPaint.exe
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\PPPaint.pdb
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.csprojAssemblyReference.cache
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\WindowsFormsApplication1.tela.resources
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.Properties.Resources.resources
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.csproj.GenerateResource.cache
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.csproj.CoreCompileInputs.cache
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.exe
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Debug\PPPaint.pdb
