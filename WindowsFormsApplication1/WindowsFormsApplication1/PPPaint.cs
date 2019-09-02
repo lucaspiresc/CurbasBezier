@@ -21,17 +21,19 @@ namespace WindowsFormsApplication1
         int? yInicial = null;
         int? yFinal = null;
 
-        //Coodenadas da ultima reta desenhada
-        //que sera utilizado para rotacionar uma reta
+        /*
+         * Coodenadas da ultima reta desenhada. Serao utilizadas nas transformacoes geometricas
+         */
         int? xInicialBuffer = null;
         int? xFinalBuffer = null;
 
         int? yInicialBuffer = null;
         int? yFinalBuffer = null;
 
-        //Salva o algoritmo utilizado para desenhar a ultima reta
-        //Isso será utilizado para rodar o mesmo algoritmo na
-        //hora de apagar a reta
+        /*
+         * Salva o algoritmo utilizado para desenhar a ultima reta, será utilizado
+         * para rodar o mesmo algoritmo caso a reta tenha que ser apagada
+         */
         AlgoritmosReta? algoritmoBuffer = null;
 
         public tela()
@@ -253,6 +255,93 @@ namespace WindowsFormsApplication1
             imagem.Image = areaDesenho;
         }
 
+        public void BresenhamCirculo(int x1, int y1, int x2, int y2, Color cor)
+        {
+
+            // Calcula o módulo do vetor equivalente ao raio
+            double potX = Math.Pow(x2 - x1, 2);
+            double potY = Math.Pow(y2 - y1, 2);
+
+            int r = Convert.ToInt32(Math.Round(Math.Sqrt(potX + potY)));
+
+            int x = 0;
+            int y = r;
+            int p = 3 - 2 * r;
+
+            PlotaSimetricos(x, y, x1, y1, cor);
+
+            while (x < y)
+            {
+                if (p < 0)
+                    p += 4 * x + 6;
+                else
+                {
+                    p += 4 * (x - y) + 10;
+                    y -= 1;
+                }
+
+                x += 1;
+
+                PlotaSimetricos(x, y, x1, y1, cor);
+            }
+        }
+
+        // Algoritmo para plotar os pontos simétricos de uma circunferência, dado o seu ponto central
+        public void PlotaSimetricos(int x, int y, int xC, int yC, Color cor)
+        {
+
+            //Verifica se os pontos a serem inseridos estão dentro da região da imagem
+            if (xC + x < areaDesenho.Size.Width & xC + x > 0)
+            {
+                if (yC + y < areaDesenho.Size.Height & yC + y > 0)
+                {
+                    areaDesenho.SetPixel(xC + x, yC + y, cor);
+                }
+                if (yC - y < areaDesenho.Size.Height & yC - y > 0)
+                {
+                    areaDesenho.SetPixel(xC + x, yC - y, cor);
+                }
+            }
+
+            if (xC - x < areaDesenho.Size.Width & xC - x > 0)
+            {
+                if (yC + y < areaDesenho.Size.Height & yC + y > 0)
+                {
+                    areaDesenho.SetPixel(xC - x, yC + y, cor);
+                }
+                if (yC - y < areaDesenho.Size.Height & yC - y > 0)
+                {
+                    areaDesenho.SetPixel(xC - x, yC - y, cor);
+                }
+            }
+
+            if (xC + y < areaDesenho.Size.Width & xC + y > 0)
+            {
+                if (yC + x < areaDesenho.Size.Height & yC + x > 0)
+                {
+                    areaDesenho.SetPixel(xC + y, yC + x, cor);
+                }
+                if (yC - x < areaDesenho.Size.Height & yC - x > 0)
+                {
+                    areaDesenho.SetPixel(xC + y, yC - x, cor);
+                }
+            }
+
+            if (xC - y < areaDesenho.Size.Width & xC - y > 0)
+            {
+                if (yC + x < areaDesenho.Size.Height & yC + x > 0)
+                {
+                    areaDesenho.SetPixel(xC - y, yC + x, cor);
+                }
+                if (yC - x < areaDesenho.Size.Height & yC - x > 0)
+                {
+                    areaDesenho.SetPixel(xC - y, yC - x, cor);
+                }
+            }
+            imagem.Image = areaDesenho;
+        }
+
+
         /*
          * Desenha uma reta da cor do fundo do canvas para "excluir" uma reta.
          * O algoritmo usado para apagar a reta deve ser o mesmo que foi utilizado
@@ -469,12 +558,20 @@ namespace WindowsFormsApplication1
 
         /*
         * Evento para tratar o clique no botão de Bresenham para circunferências,
-        * onde será verificado se o usuário entrou com os pontos final e inicial.
+        * onde será verificado se o já existe uma reta para servir de raio.
         * Estando tudo OK, executa o algoritmo e desenha a circunferência
         */
         private void Btn_BresCirc_Click(object sender, EventArgs e)
         {
-
+            if (xInicialBuffer != null && xFinalBuffer != null && yInicialBuffer != null && yFinalBuffer != null)
+            {
+                //Roda o algoritmo
+                BresenhamCirculo(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, corPreenche);
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
         }
 
         #endregion
