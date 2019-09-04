@@ -14,12 +14,28 @@ namespace WindowsFormsApplication1
     {
         Bitmap areaDesenho;
         Color corPreenche;
+        bool recorte;
 
+        /*
+         * Variaveis para salvas coordenadas p/ desenhar retas
+         */
         int? xInicial = null;
         int? xFinal = null;
 
         int? yInicial = null;
         int? yFinal = null;
+
+        /*
+         * Variaveis para salvar coordenadas p/ recorte de janela
+         */
+        int? xMin = null;
+        int? yMin = null;
+
+        int? xMax = null;
+        int? yMax = null;
+
+        int? xInt = null;
+        int? yInt = null;
 
         /*
          * Coodenadas da ultima reta desenhada. Serao utilizadas nas transformacoes geometricas
@@ -40,9 +56,14 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();            
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
-            corPreenche = Color.Black;                       
+            corPreenche = Color.Black;
+            recorte = false;
         }
 
+        /*
+         * Região contendo os algoritmos de transforamcao geometrica 
+         * exigidos no enunciado(rotacao, translacao, escala, etc)
+         */
         #region Transformacoes Geométricas
 
         /*
@@ -120,7 +141,7 @@ namespace WindowsFormsApplication1
         /*
          * Região contendo os algoritmos relacionados a desenhos de reta
          */
-        #region Retas
+        #region Retas e Circunferencias
 
         /*
          * Algoritmo DDA para desenhar uma reta a partir de seus pontos inicial e final
@@ -255,6 +276,9 @@ namespace WindowsFormsApplication1
             imagem.Image = areaDesenho;
         }
 
+        /*
+         * Algoritmo de Bresenham para traçar circunferencias utilizando apenas calculos com números inteiros
+         */
         public void BresenhamCirculo(int x1, int y1, int x2, int y2, Color cor)
         {
 
@@ -286,7 +310,9 @@ namespace WindowsFormsApplication1
             }
         }
 
-        // Algoritmo para plotar os pontos simétricos de uma circunferência, dado o seu ponto central
+        /*
+         * Desenhar os pontos simetricos de uma circunferencia, dado o seu centro
+         */
         public void PlotaSimetricos(int x, int y, int xC, int yC, Color cor)
         {
 
@@ -341,7 +367,6 @@ namespace WindowsFormsApplication1
             imagem.Image = areaDesenho;
         }
 
-
         /*
          * Desenha uma reta da cor do fundo do canvas para "excluir" uma reta.
          * O algoritmo usado para apagar a reta deve ser o mesmo que foi utilizado
@@ -362,6 +387,135 @@ namespace WindowsFormsApplication1
         #endregion
 
         /*
+         * Região contendo os algoritmos de recorte
+         */
+        #region Recorte
+
+        /*
+         * Realiza o corte de janela na reta desejada, utilizando Cohen-Sutherland
+         */
+        public void CohenSutherland(int x1, int y1, int x2, int y2, Color cor)
+        {
+            bool aceite = false, feito = false;
+            int[] c1 = new int[4];
+            int[] c2 = new int[4];
+            int[] cfora = new int[4];
+            double tempX, tempY;
+
+            // remove a reta atual
+            ApagaReta(x1, y1, x2, y2);
+
+            while (!feito)
+            {
+                c1 = RegionCode(x1, y1);
+                c2 = RegionCode(x2, y2);
+
+                if (c1[0] == 0 & c1[1] == 0 & c1[2] == 0 & c1[3] == 0 & c2[0] == 0 & c2[1] == 0 & c2[2] == 0 & c2[3] == 0)
+                {
+                    aceite = true;
+                    feito = true;
+                }
+                else if ((c1[0] != 0 & c2[0] != 0) | (c1[1] != 0 & c2[1] != 0) | (c1[2] != 0 & c2[2] != 0) | (c1[3] != 0 & c2[3] != 0))
+                {
+                    feito = true;
+                }
+                else if (c1[0] != 0 | c1[1] != 0 | c1[2] != 0 | c1[3] != 0)
+                {
+                    cfora = c1;
+                }
+                else
+                {
+                    cfora = c2;
+                }
+
+                if (cfora[3] == 1)
+                {
+                    xInt = xMin;
+
+                    tempX = x2 - x1;
+                    tempY = y2 - y1;
+
+                    yInt = Convert.ToInt32(y1 + tempY * (xMin - x1) / tempX);
+                }
+                else if (cfora[2] == 1)
+                {
+                    xInt = xMax;
+
+                    tempX = x2 - x1;
+                    tempY = y2 - y1;
+
+                    yInt = Convert.ToInt32(y1 + tempY * (xMax - x1) / tempX);
+                }
+                else if (cfora[1] == 1)
+                {
+                    yInt = yMin;
+
+                    tempX = x2 - x1;
+                    tempY = y2 - y1;
+
+                    xInt = Convert.ToInt32(x1 + tempX * (yMin - y1) / tempY);
+                }
+                else if (cfora[0] == 1)
+                {
+                    yInt = yMax;
+
+                    tempX = x2 - x1;
+                    tempY = y2 - y1;
+
+                    xInt = Convert.ToInt32(x1 + tempX * (yMax - y1) / tempY);
+                }
+
+                if (c1[0] == cfora[0] & c1[1] == cfora[1] & c1[2] == cfora[2] & c1[3] == cfora[3])
+                {
+                    x1 = xInt.Value;
+                    y1 = yInt.Value;
+                }
+                else
+                {
+                    x2 = xInt.Value;
+                    y2 = yInt.Value;
+                }
+
+                if (aceite)
+                {
+                    //Desenha a reta recortada
+                    BresenhamReta(Convert.ToInt32(x1), Convert.ToInt32(y1), Convert.ToInt32(x2), Convert.ToInt32(y2), cor);
+
+                    //Salva as coordendas como a ultima reta desenhada
+                    SalvarBuffer(Convert.ToInt32(x1), Convert.ToInt32(y1), Convert.ToInt32(x2), Convert.ToInt32(y2), AlgoritmosReta.Bresenham);
+                }
+            }
+        }
+
+        /*
+         * Verifica quais cortes são necessários para que a reta fique dentro da janela
+         */
+        public int[] RegionCode(int x, int y)
+        {
+            int[] codigo = new int[4];
+
+            if (x < xMin)
+            {
+                codigo[3] = 1;
+            }
+            if (x > xMax)
+            {
+                codigo[2] = 1;
+            }
+            if (y < yMin)
+            {
+                codigo[1] = 1;
+            }
+            if (y > yMax)
+            {
+                codigo[0] = 1;
+            }
+            return codigo;
+        }
+
+        #endregion
+
+        /*
          * Regiao que faz o tratamento dos eventos ativados pelo usuario
          * (Geralmente cliques no canvas ou cliques em botões)
          */
@@ -370,7 +524,7 @@ namespace WindowsFormsApplication1
         /*
          * Evento para tratar o clique no botão do painel de cores,
          * onde o usuário vai escolher a cor para as formas que ele irá desenhar
-         */ 
+         */
         private void BtCor_Click(object sender, EventArgs e)
         {
             DialogResult result = cdlg.ShowDialog();
@@ -406,23 +560,50 @@ namespace WindowsFormsApplication1
                 int x = e.X;
                 int y = e.Y;
 
-                //se x e y inicial não estão setados, é porque o usuário está escolhendo os pts inciais
-                if (xInicial == null && yInicial == null)
+                if (!recorte)
                 {
-                    xInicial = x;
-                    yInicial = y;
+                    //se x e y inicial não estão setados, é porque o usuário está escolhendo os pts inciais
+                    if (xInicial == null && yInicial == null)
+                    {
+                        xInicial = x;
+                        yInicial = y;
 
-                    xInit.Text = xInicial.ToString();
-                    yInit.Text = yInicial.ToString();
+                        xInit.Text = xInicial.ToString();
+                        yInit.Text = yInicial.ToString();
+                    }
+                    //se eles já estão setados, o usuário está selecionando os pontos finais
+                    else
+                    {
+                        xFinal = x;
+                        yFinal = y;
+
+                        xFim.Text = xFinal.ToString();
+                        yFim.Text = yFinal.ToString();
+                    }
                 }
-                //se eles já estão setados, o usuário está selecionando os pontos finais
                 else
                 {
-                    xFinal = x;
-                    yFinal = y;
+                    if(xMin == null && yMin == null)
+                    {
+                        xMin = x;
+                        yMin = y;
+                    }
+                    else
+                    {
+                        xMax = x;
+                        yMax = y;
 
-                    xFim.Text = xFinal.ToString();
-                    yFim.Text = yFinal.ToString();
+                        CohenSutherland(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, corPreenche);
+
+                        //Depois de rodar o recorte, reinicia as variaveis para o proximo
+                        xMin = null;
+                        yMin = null;
+
+                        xMax = null;
+                        yMax = null;
+
+                        recorte = false;
+                    }
                 }
             }
         }
@@ -574,6 +755,11 @@ namespace WindowsFormsApplication1
             }
         }
 
+        private void Btn_ChSn_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Defina as dimensões da janela de corte p/ cortar a última reta desenhada.");
+            recorte = true;
+        }
         #endregion
 
         /*

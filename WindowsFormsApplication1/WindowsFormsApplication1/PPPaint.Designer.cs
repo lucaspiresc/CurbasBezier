@@ -31,6 +31,9 @@
             this.imagem = new System.Windows.Forms.PictureBox();
             this.painel = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btn_BresCirc = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_Bresenham = new System.Windows.Forms.Button();
             this.btn_dda = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -54,15 +57,15 @@
             this.btApagar = new System.Windows.Forms.Button();
             this.btCor = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btn_BresCirc = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btn_ChSn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // imagem
@@ -78,6 +81,7 @@
             // 
             // painel
             // 
+            this.painel.Controls.Add(this.groupBox5);
             this.painel.Controls.Add(this.groupBox2);
             this.painel.Controls.Add(this.groupBox1);
             this.painel.Controls.Add(this.btApagar);
@@ -106,6 +110,37 @@
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Retas e Circunferências ";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btn_BresCirc);
+            this.groupBox4.Location = new System.Drawing.Point(9, 163);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(162, 49);
+            this.groupBox4.TabIndex = 17;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Circunferências ";
+            // 
+            // btn_BresCirc
+            // 
+            this.btn_BresCirc.Location = new System.Drawing.Point(6, 19);
+            this.btn_BresCirc.Name = "btn_BresCirc";
+            this.btn_BresCirc.Size = new System.Drawing.Size(75, 23);
+            this.btn_BresCirc.TabIndex = 17;
+            this.btn_BresCirc.Text = "Bresenham";
+            this.btn_BresCirc.UseVisualStyleBackColor = true;
+            this.btn_BresCirc.Click += new System.EventHandler(this.Btn_BresCirc_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btn_Bresenham);
+            this.groupBox3.Controls.Add(this.btn_dda);
+            this.groupBox3.Location = new System.Drawing.Point(7, 105);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(164, 52);
+            this.groupBox3.TabIndex = 17;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Retas";
             // 
             // btn_Bresenham
             // 
@@ -311,36 +346,25 @@
             this.btCor.UseVisualStyleBackColor = true;
             this.btCor.Click += new System.EventHandler(this.BtCor_Click);
             // 
-            // groupBox3
+            // groupBox5
             // 
-            this.groupBox3.Controls.Add(this.btn_Bresenham);
-            this.groupBox3.Controls.Add(this.btn_dda);
-            this.groupBox3.Location = new System.Drawing.Point(7, 105);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(164, 52);
-            this.groupBox3.TabIndex = 17;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Retas";
+            this.groupBox5.Controls.Add(this.btn_ChSn);
+            this.groupBox5.Location = new System.Drawing.Point(22, 447);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(187, 51);
+            this.groupBox5.TabIndex = 17;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Recorte de Retas";
             // 
-            // groupBox4
+            // btn_ChSn
             // 
-            this.groupBox4.Controls.Add(this.btn_BresCirc);
-            this.groupBox4.Location = new System.Drawing.Point(9, 163);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(162, 49);
-            this.groupBox4.TabIndex = 17;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Circunferências ";
-            // 
-            // btn_BresCirc
-            // 
-            this.btn_BresCirc.Location = new System.Drawing.Point(6, 19);
-            this.btn_BresCirc.Name = "btn_BresCirc";
-            this.btn_BresCirc.Size = new System.Drawing.Size(75, 23);
-            this.btn_BresCirc.TabIndex = 17;
-            this.btn_BresCirc.Text = "Bresenham";
-            this.btn_BresCirc.UseVisualStyleBackColor = true;
-            this.btn_BresCirc.Click += new System.EventHandler(this.Btn_BresCirc_Click);
+            this.btn_ChSn.Location = new System.Drawing.Point(6, 19);
+            this.btn_ChSn.Name = "btn_ChSn";
+            this.btn_ChSn.Size = new System.Drawing.Size(75, 23);
+            this.btn_ChSn.TabIndex = 18;
+            this.btn_ChSn.Text = "Coh-Sun";
+            this.btn_ChSn.UseVisualStyleBackColor = true;
+            this.btn_ChSn.Click += new System.EventHandler(this.Btn_ChSn_Click);
             // 
             // tela
             // 
@@ -355,10 +379,11 @@
             this.painel.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -394,6 +419,8 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btn_BresCirc;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button btn_ChSn;
     }
 }
 
