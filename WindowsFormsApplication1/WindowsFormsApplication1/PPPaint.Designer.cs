@@ -30,6 +30,9 @@
         {
             this.imagem = new System.Windows.Forms.PictureBox();
             this.painel = new System.Windows.Forms.Panel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btn_LiBa = new System.Windows.Forms.Button();
+            this.btn_ChSn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btn_BresCirc = new System.Windows.Forms.Button();
@@ -57,15 +60,13 @@
             this.btApagar = new System.Windows.Forms.Button();
             this.btCor = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.btn_ChSn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // imagem
@@ -81,7 +82,6 @@
             // 
             // painel
             // 
-            this.painel.Controls.Add(this.groupBox5);
             this.painel.Controls.Add(this.groupBox2);
             this.painel.Controls.Add(this.groupBox1);
             this.painel.Controls.Add(this.btApagar);
@@ -92,8 +92,40 @@
             this.painel.Size = new System.Drawing.Size(244, 562);
             this.painel.TabIndex = 1;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btn_LiBa);
+            this.groupBox5.Controls.Add(this.btn_ChSn);
+            this.groupBox5.Location = new System.Drawing.Point(9, 218);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(162, 51);
+            this.groupBox5.TabIndex = 17;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Recorte de Retas";
+            // 
+            // btn_LiBa
+            // 
+            this.btn_LiBa.Location = new System.Drawing.Point(81, 19);
+            this.btn_LiBa.Name = "btn_LiBa";
+            this.btn_LiBa.Size = new System.Drawing.Size(75, 23);
+            this.btn_LiBa.TabIndex = 19;
+            this.btn_LiBa.Text = "Li-Ba";
+            this.btn_LiBa.UseVisualStyleBackColor = true;
+            this.btn_LiBa.Click += new System.EventHandler(this.Btn_LiBa_Click);
+            // 
+            // btn_ChSn
+            // 
+            this.btn_ChSn.Location = new System.Drawing.Point(4, 19);
+            this.btn_ChSn.Name = "btn_ChSn";
+            this.btn_ChSn.Size = new System.Drawing.Size(75, 23);
+            this.btn_ChSn.TabIndex = 18;
+            this.btn_ChSn.Text = "Coh-Sun";
+            this.btn_ChSn.UseVisualStyleBackColor = true;
+            this.btn_ChSn.Click += new System.EventHandler(this.Btn_ChSn_Click);
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.groupBox5);
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.label1);
@@ -106,7 +138,7 @@
             this.groupBox2.Controls.Add(this.yFim);
             this.groupBox2.Location = new System.Drawing.Point(22, 202);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(187, 218);
+            this.groupBox2.Size = new System.Drawing.Size(187, 283);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Retas e Circunferências ";
@@ -346,26 +378,6 @@
             this.btCor.UseVisualStyleBackColor = true;
             this.btCor.Click += new System.EventHandler(this.BtCor_Click);
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.btn_ChSn);
-            this.groupBox5.Location = new System.Drawing.Point(22, 447);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(187, 51);
-            this.groupBox5.TabIndex = 17;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Recorte de Retas";
-            // 
-            // btn_ChSn
-            // 
-            this.btn_ChSn.Location = new System.Drawing.Point(6, 19);
-            this.btn_ChSn.Name = "btn_ChSn";
-            this.btn_ChSn.Size = new System.Drawing.Size(75, 23);
-            this.btn_ChSn.TabIndex = 18;
-            this.btn_ChSn.Text = "Coh-Sun";
-            this.btn_ChSn.UseVisualStyleBackColor = true;
-            this.btn_ChSn.Click += new System.EventHandler(this.Btn_ChSn_Click);
-            // 
             // tela
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -377,13 +389,13 @@
             this.Text = "Manipulação Imagem";
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).EndInit();
             this.painel.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -421,6 +433,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btn_ChSn;
+        private System.Windows.Forms.Button btn_LiBa;
     }
 }
 

@@ -14,7 +14,6 @@ namespace WindowsFormsApplication1
     {
         Bitmap areaDesenho;
         Color corPreenche;
-        bool recorte;
 
         /*
          * Variaveis para salvas coordenadas p/ desenhar retas
@@ -52,12 +51,13 @@ namespace WindowsFormsApplication1
          */
         AlgoritmosReta? algoritmoBuffer = null;
 
+        AlgoritmosRecorte? recorte = null;
+
         public tela()
         {
             InitializeComponent();            
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
             corPreenche = Color.Black;
-            recorte = false;
         }
 
         /*
@@ -513,6 +513,84 @@ namespace WindowsFormsApplication1
             return codigo;
         }
 
+        /*
+         * Realiza o corte de janela utilizando Liang-Barsky
+         */
+        public void LiangBarsky(int x1, int y1, int x2, int y2, Color cor)
+        {
+            int u1 = 0;
+            int u2 = 1;
+            int dx = x2 - x1;
+            int dy = y2 - y1;
+
+            // remove a reta atual
+            ApagaReta(x1, y1, x2, y2);
+
+            if (ClipTest(-dx, x1 - xMin.Value, ref u1, ref u2))
+            {
+                if (ClipTest(dx, xMax.Value - x1, ref u1, ref u2))
+                {
+                    if (ClipTest(-dy, y1 - yMin.Value, ref u1, ref u2))
+                    {
+                        if (ClipTest(dy, yMax.Value - y1, ref u1, ref u2))
+                        {
+                            if (u2 < 1)
+                            {
+                                x2 = Convert.ToInt32(x1 + u2 * dx);
+                                y2 = Convert.ToInt32(y1 + u2 * dy);
+                            }
+                            if (u1 > 0)
+                            {
+                                x1 = Convert.ToInt32(x1 + u1 * dx);
+                                y1 = Convert.ToInt32(y1 + u1 * dy);
+                            }
+
+                            //Desenha a reta recortada
+                            BresenhamReta(Convert.ToInt32(x1), Convert.ToInt32(y1), Convert.ToInt32(x2), Convert.ToInt32(y2), cor);
+
+                            //Salva as coordendas como a ultima reta desenhada
+                            SalvarBuffer(Convert.ToInt32(x1), Convert.ToInt32(y1), Convert.ToInt32(x2), Convert.ToInt32(y2), AlgoritmosReta.Bresenham);
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool ClipTest(int p, int q, ref int u1, ref int u2)
+        {
+            bool result = true;
+            double r;
+            if (p < 0)
+            {
+                r = q / p;
+                if (r > u2)
+                {
+                    result = false;
+                }
+                else if (r > u1)
+                {
+                    u1 = Convert.ToInt32(r);
+                }
+            }
+            else if (p > 0)
+            {
+                r = q / p;
+                if (r < u1)
+                {
+                    result = false;
+                }
+                else if (r < u2)
+                {
+                    u2 = Convert.ToInt32(r);
+                }
+            }
+            else if (q < 0)
+            {
+                result = false;
+            }
+
+            return result;
+        }
         #endregion
 
         /*
@@ -560,7 +638,7 @@ namespace WindowsFormsApplication1
                 int x = e.X;
                 int y = e.Y;
 
-                if (!recorte)
+                if (recorte == null)
                 {
                     //se x e y inicial não estão setados, é porque o usuário está escolhendo os pts inciais
                     if (xInicial == null && yInicial == null)
@@ -593,7 +671,14 @@ namespace WindowsFormsApplication1
                         xMax = x;
                         yMax = y;
 
-                        CohenSutherland(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, corPreenche);
+                        if (recorte == AlgoritmosRecorte.CohenSutherland)
+                        {
+                            CohenSutherland(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, corPreenche);
+                        }
+                        else if (recorte == AlgoritmosRecorte.LiangBarsky)
+                        {
+                            LiangBarsky(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, corPreenche);
+                        }
 
                         //Depois de rodar o recorte, reinicia as variaveis para o proximo
                         xMin = null;
@@ -602,7 +687,7 @@ namespace WindowsFormsApplication1
                         xMax = null;
                         yMax = null;
 
-                        recorte = false;
+                        recorte = null;
                     }
                 }
             }
@@ -755,10 +840,40 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+         * Evento para tratar o clique no botao de recorte de Cohen-Sutherland,
+         * onde será solicitado que o usuario defina a região do recorte
+         */
         private void Btn_ChSn_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Defina as dimensões da janela de corte p/ cortar a última reta desenhada.");
-            recorte = true;
+            //Verifica se existe uma reta para ser recortada
+            if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
+            {
+                MessageBox.Show("Defina as dimensões da janela de corte p/ cortar a última reta desenhada.");
+                recorte = AlgoritmosRecorte.CohenSutherland;
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
+        }
+
+        /*
+         * Evento para tratar o clique no botao de recorte de  Liang-Barsky,
+         * onde será solicitado que o usuario defina a região do recorte
+         */
+        private void Btn_LiBa_Click(object sender, EventArgs e)
+        {
+            //Verifica se existe uma reta para ser recortada
+            if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
+            {
+                MessageBox.Show("Defina as dimensões da janela de corte p/ cortar a última reta desenhada.");
+                recorte = AlgoritmosRecorte.LiangBarsky;
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
         }
         #endregion
 
