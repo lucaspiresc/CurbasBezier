@@ -518,12 +518,12 @@ namespace WindowsFormsApplication1
          */
         public void LiangBarsky(int x1, int y1, int x2, int y2, Color cor)
         {
-            int u1 = 0;
-            int u2 = 1;
-            int dx = x2 - x1;
-            int dy = y2 - y1;
+            double u1 = 0;
+            double u2 = 1;
+            double dx = x2 - x1;
+            double dy = y2 - y1;
 
-            // remove a reta atual
+            //Remove a reta atual
             ApagaReta(x1, y1, x2, y2);
 
             if (ClipTest(-dx, x1 - xMin.Value, ref u1, ref u2))
@@ -556,7 +556,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public bool ClipTest(int p, int q, ref int u1, ref int u2)
+        public bool ClipTest(double p, double q, ref double u1, ref double u2)
         {
             bool result = true;
             double r;
@@ -569,7 +569,7 @@ namespace WindowsFormsApplication1
                 }
                 else if (r > u1)
                 {
-                    u1 = Convert.ToInt32(r);
+                    u1 = r;
                 }
             }
             else if (p > 0)
@@ -581,7 +581,7 @@ namespace WindowsFormsApplication1
                 }
                 else if (r < u2)
                 {
-                    u2 = Convert.ToInt32(r);
+                    u2 = r;
                 }
             }
             else if (q < 0)
