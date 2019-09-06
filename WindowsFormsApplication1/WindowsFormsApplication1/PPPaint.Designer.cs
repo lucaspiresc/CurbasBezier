@@ -30,10 +30,10 @@
         {
             this.imagem = new System.Windows.Forms.PictureBox();
             this.painel = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btn_LiBa = new System.Windows.Forms.Button();
             this.btn_ChSn = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btn_BresCirc = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -60,13 +60,19 @@
             this.btApagar = new System.Windows.Forms.Button();
             this.btCor = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btn_Cima = new System.Windows.Forms.Button();
+            this.btn_Direita = new System.Windows.Forms.Button();
+            this.btn_Baixo = new System.Windows.Forms.Button();
+            this.btn_Esquerda = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // imagem
@@ -75,22 +81,43 @@
             this.imagem.Dock = System.Windows.Forms.DockStyle.Fill;
             this.imagem.Location = new System.Drawing.Point(0, 0);
             this.imagem.Name = "imagem";
-            this.imagem.Size = new System.Drawing.Size(946, 562);
+            this.imagem.Size = new System.Drawing.Size(1014, 562);
             this.imagem.TabIndex = 0;
             this.imagem.TabStop = false;
             this.imagem.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Imagem_Click);
             // 
             // painel
             // 
+            this.painel.Controls.Add(this.groupBox6);
             this.painel.Controls.Add(this.groupBox2);
             this.painel.Controls.Add(this.groupBox1);
             this.painel.Controls.Add(this.btApagar);
             this.painel.Controls.Add(this.btCor);
             this.painel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.painel.Location = new System.Drawing.Point(702, 0);
+            this.painel.Location = new System.Drawing.Point(588, 0);
             this.painel.Name = "painel";
-            this.painel.Size = new System.Drawing.Size(244, 562);
+            this.painel.Size = new System.Drawing.Size(426, 562);
             this.painel.TabIndex = 1;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.groupBox5);
+            this.groupBox2.Controls.Add(this.groupBox4);
+            this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.xFim);
+            this.groupBox2.Controls.Add(this.yInit);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.xInit);
+            this.groupBox2.Controls.Add(this.yFim);
+            this.groupBox2.Location = new System.Drawing.Point(22, 202);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(187, 283);
+            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Retas e Circunferências ";
             // 
             // groupBox5
             // 
@@ -122,26 +149,6 @@
             this.btn_ChSn.Text = "Coh-Sun";
             this.btn_ChSn.UseVisualStyleBackColor = true;
             this.btn_ChSn.Click += new System.EventHandler(this.Btn_ChSn_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.groupBox5);
-            this.groupBox2.Controls.Add(this.groupBox4);
-            this.groupBox2.Controls.Add(this.groupBox3);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.xFim);
-            this.groupBox2.Controls.Add(this.yInit);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.xInit);
-            this.groupBox2.Controls.Add(this.yFim);
-            this.groupBox2.Location = new System.Drawing.Point(22, 202);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(187, 283);
-            this.groupBox2.TabIndex = 16;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Retas e Circunferências ";
             // 
             // groupBox4
             // 
@@ -378,24 +385,78 @@
             this.btCor.UseVisualStyleBackColor = true;
             this.btCor.Click += new System.EventHandler(this.BtCor_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btn_Esquerda);
+            this.groupBox6.Controls.Add(this.btn_Baixo);
+            this.groupBox6.Controls.Add(this.btn_Direita);
+            this.groupBox6.Controls.Add(this.btn_Cima);
+            this.groupBox6.Location = new System.Drawing.Point(221, 12);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(187, 100);
+            this.groupBox6.TabIndex = 17;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Espelhamento";
+            // 
+            // btn_Cima
+            // 
+            this.btn_Cima.Location = new System.Drawing.Point(6, 30);
+            this.btn_Cima.Name = "btn_Cima";
+            this.btn_Cima.Size = new System.Drawing.Size(75, 23);
+            this.btn_Cima.TabIndex = 17;
+            this.btn_Cima.Text = "Cima";
+            this.btn_Cima.UseVisualStyleBackColor = true;
+            this.btn_Cima.Click += new System.EventHandler(this.Btn_Cima_Click);
+            // 
+            // btn_Direita
+            // 
+            this.btn_Direita.Location = new System.Drawing.Point(6, 71);
+            this.btn_Direita.Name = "btn_Direita";
+            this.btn_Direita.Size = new System.Drawing.Size(75, 23);
+            this.btn_Direita.TabIndex = 18;
+            this.btn_Direita.Text = "Direita";
+            this.btn_Direita.UseVisualStyleBackColor = true;
+            this.btn_Direita.Click += new System.EventHandler(this.Btn_Direita_Click);
+            // 
+            // btn_Baixo
+            // 
+            this.btn_Baixo.Location = new System.Drawing.Point(87, 30);
+            this.btn_Baixo.Name = "btn_Baixo";
+            this.btn_Baixo.Size = new System.Drawing.Size(75, 23);
+            this.btn_Baixo.TabIndex = 19;
+            this.btn_Baixo.Text = "Baixo";
+            this.btn_Baixo.UseVisualStyleBackColor = true;
+            this.btn_Baixo.Click += new System.EventHandler(this.Btn_Baixo_Click);
+            // 
+            // btn_Esquerda
+            // 
+            this.btn_Esquerda.Location = new System.Drawing.Point(87, 71);
+            this.btn_Esquerda.Name = "btn_Esquerda";
+            this.btn_Esquerda.Size = new System.Drawing.Size(75, 23);
+            this.btn_Esquerda.TabIndex = 20;
+            this.btn_Esquerda.Text = "Esquerda";
+            this.btn_Esquerda.UseVisualStyleBackColor = true;
+            this.btn_Esquerda.Click += new System.EventHandler(this.Btn_Esquerda_Click);
+            // 
             // tela
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(946, 562);
+            this.ClientSize = new System.Drawing.Size(1014, 562);
             this.Controls.Add(this.painel);
             this.Controls.Add(this.imagem);
             this.Name = "tela";
             this.Text = "Manipulação Imagem";
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).EndInit();
             this.painel.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -434,6 +495,11 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Button btn_ChSn;
         private System.Windows.Forms.Button btn_LiBa;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btn_Esquerda;
+        private System.Windows.Forms.Button btn_Baixo;
+        private System.Windows.Forms.Button btn_Direita;
+        private System.Windows.Forms.Button btn_Cima;
     }
 }
 

@@ -136,6 +136,60 @@ namespace WindowsFormsApplication1
             SalvarBuffer(x1, y1, x2, y2, AlgoritmosReta.DDA);
         }
 
+        /*
+         * Faz o espelhamento da ultima reta desenhada, na direcao selecionada
+         */
+        public void Espelhamento(int x1, int y1, int x2, int y2, Direcoes direcao)
+        {
+            if (direcao == Direcoes.CIMA)
+            {
+                if (y1 > y2)
+                {
+                    y1 -= 2 * Math.Abs(y1 - y2);
+                }
+                else
+                {
+                    y2 -= 2 * Math.Abs(y1 - y2);
+                }
+                BresenhamReta(x1, y1, x2, y2, corPreenche);
+            }
+            else if (direcao == Direcoes.BAIXO)
+            {
+                if (y1 > y2)
+                {
+                    y2 += 2 * Math.Abs(y1 - y2);
+                }
+                else
+                {
+                    y1 += 2 * Math.Abs(y1 - y2);
+                }
+                BresenhamReta(x1, y1, x2, y2, corPreenche);
+            }
+            else if (direcao == Direcoes.ESQUERDA) 
+            {
+                if (x1 > x2)
+                {
+                    x1 -= 2 * Math.Abs(x1 - x2);
+                }
+                else
+                {
+                    x2 -= 2 * Math.Abs(x1 - x2);
+                }
+                BresenhamReta(x1, y1, x2, y2, corPreenche);
+            }
+            else if (direcao == Direcoes.DIREITA)
+            {
+                if (x1 > x2)
+                {
+                    x2 += 2 * Math.Abs(x1 - x2);
+                }
+                else
+                {
+                    x1 += 2 * Math.Abs(x1 - x2);
+                }
+                BresenhamReta(x1, y1, x2, y2, corPreenche);
+            }
+        }
         #endregion
 
         /*
@@ -488,7 +542,7 @@ namespace WindowsFormsApplication1
         }
 
         /*
-         * Verifica quais cortes são necessários para que a reta fique dentro da janela
+         * Verifica quais cortes são necessários para que a reta fique dentro da janela.
          */
         public int[] RegionCode(int x, int y)
         {
@@ -869,6 +923,70 @@ namespace WindowsFormsApplication1
             {
                 MessageBox.Show("Defina as dimensões da janela de corte p/ cortar a última reta desenhada.");
                 recorte = AlgoritmosRecorte.LiangBarsky;
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
+        }
+
+        /*
+         * Evento para tratar o clique no botao de espelhamento para cima de uma reta
+         */
+        private void Btn_Cima_Click(object sender, EventArgs e)
+        {
+            //Verifica se existe uma reta para ser recortada
+            if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
+            {
+                Espelhamento(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, Direcoes.CIMA);
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
+        }
+
+        /*
+         * Evento para tratar o clique no botao de espelhamento para baixo de uma reta
+         */
+        private void Btn_Baixo_Click(object sender, EventArgs e)
+        {
+            //Verifica se existe uma reta para ser recortada
+            if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
+            {
+                Espelhamento(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, Direcoes.BAIXO);
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
+        }
+
+        /*
+         * Evento para tratar o clique no botao de espelhamento para direta de uma reta
+         */
+        private void Btn_Direita_Click(object sender, EventArgs e)
+        {
+            //Verifica se existe uma reta para ser recortada
+            if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
+            {
+                Espelhamento(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, Direcoes.DIREITA);
+            }
+            else
+            {
+                MessageBox.Show("Não existe reta na imagem, favor inserir uma reta primeiro", "Erro");
+            }
+        }
+
+        /*
+         * Evento para tratar o clique no botao de espelhamento para esquerda de uma reta
+         */
+        private void Btn_Esquerda_Click(object sender, EventArgs e)
+        {
+            //Verifica se existe uma reta para ser recortada
+            if (xInicialBuffer.HasValue && yInicialBuffer.HasValue && xFinalBuffer.HasValue && yFinalBuffer.HasValue)
+            {
+                Espelhamento(xInicialBuffer.Value, yInicialBuffer.Value, xFinalBuffer.Value, yFinalBuffer.Value, Direcoes.ESQUERDA);
             }
             else
             {
