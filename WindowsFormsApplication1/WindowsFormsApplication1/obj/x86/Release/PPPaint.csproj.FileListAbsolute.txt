@@ -1,0 +1,8 @@
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\bin\Release\PPPaint.exe
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\bin\Release\PPPaint.pdb
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Release\PPPaint.csprojAssemblyReference.cache
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Release\WindowsFormsApplication1.tela.resources
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Release\PPPaint.Properties.Resources.resources
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Release\PPPaint.csproj.GenerateResource.cache
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Release\PPPaint.exe
+C:\Users\dell\Documents\TrabalhoCG\WindowsFormsApplication1\WindowsFormsApplication1\obj\x86\Release\PPPaint.pdb
