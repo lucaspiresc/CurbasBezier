@@ -24,6 +24,7 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();            
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
+            //Escolhe uma cor para a curva antes de iniciar a aplicação
             BtCor_Click(null, null);
         }
 
@@ -56,9 +57,7 @@ namespace WindowsFormsApplication1
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
             imagem.Image = areaDesenho;
 
-            //Reinicia as listas de pontos
-            pontosX = new List<int>();
-            pontosY = new List<int>();
+            ResetaVariaveis();
         }
 
         /*
@@ -283,8 +282,8 @@ namespace WindowsFormsApplication1
         }
 
         /*
-         * Reseta as variaveis apos a execucao de um algoritmo de curva, para prepara-las para outra
-         * execucao
+         * Reseta as variaveis apos a execucao de um algoritmo de curva,
+         * ara prepara-las para outra execucao
          */
         public void ResetaVariaveis()
         {
