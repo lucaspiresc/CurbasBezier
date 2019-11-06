@@ -69,9 +69,9 @@ namespace WindowsFormsApplication1
         {
             if (e.Button == MouseButtons.Left && escolhendoPontos)
             {
-                // valores subtraídos para posicionar o pixel no bitmap e salvos na lista de pontos X e Y
-                pontosX.Add(MousePosition.X - this.Location.X - imagem.Location.X - 8);
-                pontosY.Add(MousePosition.Y - this.Location.Y - imagem.Location.Y - 30);
+                //Adiciona ponto na lista de pontos atuais, e desenha esse ponto no canvas
+                pontosX.Add(e.X);
+                pontosY.Add(e.Y);
 
                 totalPontos++;
 
@@ -79,10 +79,11 @@ namespace WindowsFormsApplication1
 
                 imagem.Image = areaDesenho;
 
-                //Verifica se um par de pontos foi selecionado na tela
-                if(totalPontos > 2 && totalPontos < 4 && quadratica)
+                //Se o usuario escolheu quadratica e os 3 pontos,
+                //gera as retas delimitadoras e executa o algoritmo
+                if(totalPontos == 3 && quadratica)
                 {
-                    // Gera as retas delimitadoras
+                    //Desenha as retas delimitadoras
                     BresenhamReta(pontosX[totalPontos - 3], pontosY[totalPontos - 3], pontosX[totalPontos - 2], pontosY[totalPontos - 2], Color.Red);
                     BresenhamReta(pontosX[totalPontos - 2], pontosY[totalPontos - 2], pontosX[totalPontos - 1], pontosY[totalPontos - 1], Color.Red);
 
@@ -91,14 +92,16 @@ namespace WindowsFormsApplication1
 
                     ResetaVariaveis();
                 }
-                else if (totalPontos > 3 & totalPontos < 5 & cubica)
+                //Se o usuario escolheu cubica e os 4 pontos,
+                //gera as retas delimitadoras e executa o algoritmo
+                else if (totalPontos == 4 & cubica)
                 {
-                    // Gera as retas delimitadoras
+                    //Desenha as retas delimitadoras
                     BresenhamReta(pontosX[totalPontos - 4], pontosY[totalPontos - 4], pontosX[totalPontos - 3], pontosY[totalPontos - 3], Color.Red);
                     BresenhamReta(pontosX[totalPontos - 3], pontosY[totalPontos - 3], pontosX[totalPontos - 2], pontosY[totalPontos - 2], Color.Red);
                     BresenhamReta(pontosX[totalPontos - 2], pontosY[totalPontos - 2], pontosX[totalPontos - 1], pontosY[totalPontos - 1], Color.Red);
 
-                    // Gera a curva de Bezier
+                    //Desenha a curva de Bezier
                     BezierCubica(pontosX[totalPontos - 4], pontosY[totalPontos - 4], pontosX[totalPontos - 3], pontosY[totalPontos - 3], pontosX[totalPontos - 2], pontosY[totalPontos - 2], pontosX[totalPontos - 1], pontosY[totalPontos - 1], corPreenche);
 
                     ResetaVariaveis();
