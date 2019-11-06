@@ -25,7 +25,7 @@ namespace WindowsFormsApplication1
             InitializeComponent();            
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
             //Escolhe uma cor para a curva antes de iniciar a aplicação
-            BtCor_Click(null, null);
+            corPreenche = Color.Black;
         }
 
         /*

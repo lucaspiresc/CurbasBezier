@@ -30,11 +30,11 @@
         {
             this.imagem = new System.Windows.Forms.PictureBox();
             this.painel = new System.Windows.Forms.Panel();
+            this.btn_Bz_Cub = new System.Windows.Forms.Button();
+            this.btn_Bz_Quad = new System.Windows.Forms.Button();
             this.btApagar = new System.Windows.Forms.Button();
             this.btCor = new System.Windows.Forms.Button();
             this.cdlg = new System.Windows.Forms.ColorDialog();
-            this.btn_Bz_Quad = new System.Windows.Forms.Button();
-            this.btn_Bz_Cub = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imagem)).BeginInit();
             this.painel.SuspendLayout();
             this.SuspendLayout();
@@ -62,9 +62,29 @@
             this.painel.Size = new System.Drawing.Size(216, 562);
             this.painel.TabIndex = 1;
             // 
+            // btn_Bz_Cub
+            // 
+            this.btn_Bz_Cub.Location = new System.Drawing.Point(3, 41);
+            this.btn_Bz_Cub.Name = "btn_Bz_Cub";
+            this.btn_Bz_Cub.Size = new System.Drawing.Size(210, 23);
+            this.btn_Bz_Cub.TabIndex = 8;
+            this.btn_Bz_Cub.Text = "Bezier Cubica";
+            this.btn_Bz_Cub.UseVisualStyleBackColor = true;
+            this.btn_Bz_Cub.Click += new System.EventHandler(this.btn_Bz_Cub_Click);
+            // 
+            // btn_Bz_Quad
+            // 
+            this.btn_Bz_Quad.Location = new System.Drawing.Point(3, 12);
+            this.btn_Bz_Quad.Name = "btn_Bz_Quad";
+            this.btn_Bz_Quad.Size = new System.Drawing.Size(210, 23);
+            this.btn_Bz_Quad.TabIndex = 7;
+            this.btn_Bz_Quad.Text = "Bezier Quadratica";
+            this.btn_Bz_Quad.UseVisualStyleBackColor = true;
+            this.btn_Bz_Quad.Click += new System.EventHandler(this.btn_Bz_Quad_Click);
+            // 
             // btApagar
             // 
-            this.btApagar.Location = new System.Drawing.Point(129, 527);
+            this.btApagar.Location = new System.Drawing.Point(112, 70);
             this.btApagar.Name = "btApagar";
             this.btApagar.Size = new System.Drawing.Size(75, 23);
             this.btApagar.TabIndex = 6;
@@ -74,33 +94,13 @@
             // 
             // btCor
             // 
-            this.btCor.Location = new System.Drawing.Point(48, 527);
+            this.btCor.Location = new System.Drawing.Point(31, 70);
             this.btCor.Name = "btCor";
             this.btCor.Size = new System.Drawing.Size(75, 23);
             this.btCor.TabIndex = 5;
             this.btCor.Text = "Cor";
             this.btCor.UseVisualStyleBackColor = true;
             this.btCor.Click += new System.EventHandler(this.BtCor_Click);
-            // 
-            // btn_Bz_Quad
-            // 
-            this.btn_Bz_Quad.Location = new System.Drawing.Point(43, 12);
-            this.btn_Bz_Quad.Name = "btn_Bz_Quad";
-            this.btn_Bz_Quad.Size = new System.Drawing.Size(161, 23);
-            this.btn_Bz_Quad.TabIndex = 7;
-            this.btn_Bz_Quad.Text = "Bezier Quadratica";
-            this.btn_Bz_Quad.UseVisualStyleBackColor = true;
-            this.btn_Bz_Quad.Click += new System.EventHandler(this.btn_Bz_Quad_Click);
-            // 
-            // btn_Bz_Cub
-            // 
-            this.btn_Bz_Cub.Location = new System.Drawing.Point(43, 50);
-            this.btn_Bz_Cub.Name = "btn_Bz_Cub";
-            this.btn_Bz_Cub.Size = new System.Drawing.Size(161, 23);
-            this.btn_Bz_Cub.TabIndex = 8;
-            this.btn_Bz_Cub.Text = "Bezier Cubica";
-            this.btn_Bz_Cub.UseVisualStyleBackColor = true;
-            this.btn_Bz_Cub.Click += new System.EventHandler(this.btn_Bz_Cub_Click);
             // 
             // tela
             // 
