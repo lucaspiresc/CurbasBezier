@@ -15,17 +15,19 @@ namespace WindowsFormsApplication1
         Bitmap areaDesenho;
         Color corPreenche;
 
-        List<int> pontosX = new List<int>();
-        List<int> pontosY = new List<int>();
+        List<int> pontosX;
+        List<int> pontosY;
         int totalPontos;
+
         bool escolhendoPontos, quadratica, cubica;
 
         public tela()
         {
             InitializeComponent();            
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
-            //Escolhe uma cor para a curva antes de iniciar a aplicação
             corPreenche = Color.Black;
+
+            ResetaVariaveis();
         }
 
         /*
@@ -67,6 +69,7 @@ namespace WindowsFormsApplication1
          */ 
         private void Imagem_Click(object sender, MouseEventArgs e)
         {
+            //Só computa cliques no canvas caso o usuario escolha um tipo de curva
             if (e.Button == MouseButtons.Left && escolhendoPontos)
             {
                 //Adiciona ponto na lista de pontos atuais, e desenha esse ponto no canvas
@@ -149,21 +152,22 @@ namespace WindowsFormsApplication1
          * Desenha a curva de Bezier de grau 2,
          * aplicando o algoritmo de Casteljau
          */
-        public void BezierQuadratica(int xC1, int yC1, int xC2, int yC2, int xC3, int yC3, Color cor)
+        public void BezierQuadratica(int x1, int y1, int x2, int y2, int x3, int y3, Color cor)
         {
-            int xOld = xC1;
-            int yOld = yC1;
-            int xNew, yNew;
+            int xInit = x1;
+            int yInit = y1;
+
+            int xFim, yFim;
 
             for (double t = 0; t <= 1; t += 0.001)
             {
-               xNew = Convert.ToInt32(Math.Pow((1 - t), 2) * xC1 + 2 * t * (1 - t) * xC2 + Math.Pow(t, 2) * xC3);
-               yNew = Convert.ToInt32(Math.Pow((1 - t), 2) * yC1 + 2 * t * (1 - t) * yC2 + Math.Pow(t, 2) * yC3);
+                xFim = Convert.ToInt32(Math.Pow((1 - t), 2) * x1 + 2 * t * (1 - t) * x2 + Math.Pow(t, 2) * x3);
+                yFim = Convert.ToInt32(Math.Pow((1 - t), 2) * y1 + 2 * t * (1 - t) * y2 + Math.Pow(t, 2) * y3);
 
-                BresenhamReta(Math.Abs(xOld), Math.Abs(yOld), Math.Abs(xNew), Math.Abs(yNew), cor);
+                BresenhamReta(Math.Abs(xInit), Math.Abs(yInit), Math.Abs(xFim), Math.Abs(yFim), cor);
 
-                xOld = xNew;
-                yOld = yNew;
+                xInit = xFim;
+                yInit = yFim;
             }
         }
 
@@ -171,21 +175,22 @@ namespace WindowsFormsApplication1
          * Desenha a curva de Bezier de grau 3,
          * aplicando o algoritmo de Casteljau
          */
-        public void BezierCubica(int xC1, int yC1, int xC2, int yC2, int xC3, int yC3, int xC4, int yC4, Color cor)
+        public void BezierCubica(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, Color cor)
         {
-            int xOld = xC1;
-            int yOld = yC1;
-            int xNew, yNew;
+            int xInit = x1;
+            int yInit = y1;
+
+            int xFim, yFim;
 
             for (double t = 0; t <= 1; t += 0.001)
             {
-                xNew = Convert.ToInt32(Math.Pow((1 - t), 3) * xC1 + 3 * t * Math.Pow((1 - t), 2) * xC2 + 3 * (1 - t) * Math.Pow(t, 2) * xC3 + Math.Pow(t, 3) * xC4);
-                yNew = Convert.ToInt32(Math.Pow((1 - t), 3) * yC1 + 3 * t * Math.Pow((1 - t), 2) * yC2 + 3 * (1 - t) * Math.Pow(t, 2) * yC3 + Math.Pow(t, 3) * yC4);
+                xFim = Convert.ToInt32(Math.Pow((1 - t), 3) * x1 + 3 * t * Math.Pow((1 - t), 2) * x2 + 3 * (1 - t) * Math.Pow(t, 2) * x3 + Math.Pow(t, 3) * x4);
+                yFim = Convert.ToInt32(Math.Pow((1 - t), 3) * y1 + 3 * t * Math.Pow((1 - t), 2) * y2 + 3 * (1 - t) * Math.Pow(t, 2) * y3 + Math.Pow(t, 3) * y4);
 
-                BresenhamReta(Math.Abs(xOld), Math.Abs(yOld), Math.Abs(xNew), Math.Abs(yNew), cor);
+                BresenhamReta(Math.Abs(xInit), Math.Abs(yInit), Math.Abs(xFim), Math.Abs(yFim), cor);
 
-                xOld = xNew;
-                yOld = yNew;
+                xInit = xFim;
+                yInit = yFim;
             }
         }
 
