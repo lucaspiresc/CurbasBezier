@@ -251,7 +251,9 @@ namespace WindowsFormsApplication1
                 {
                     x += xIncr;
                     if (p < 0)
+                    {
                         p += const1;
+                    }
                     else
                     {
                         y += yIncr;
