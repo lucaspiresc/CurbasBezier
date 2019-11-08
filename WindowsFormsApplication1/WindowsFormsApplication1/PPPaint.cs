@@ -145,6 +145,10 @@ namespace WindowsFormsApplication1
 
         #region Curvas Parametricas
 
+        /*
+         * Desenha a curva de Bezier de grau 2,
+         * aplicando o algoritmo de Casteljau
+         */
         public void BezierQuadratica(int xC1, int yC1, int xC2, int yC2, int xC3, int yC3, Color cor)
         {
             int xOld = xC1;
@@ -163,6 +167,10 @@ namespace WindowsFormsApplication1
             }
         }
 
+        /*
+         * Desenha a curva de Bezier de grau 3,
+         * aplicando o algoritmo de Casteljau
+         */
         public void BezierCubica(int xC1, int yC1, int xC2, int yC2, int xC3, int yC3, int xC4, int yC4, Color cor)
         {
             int xOld = xC1;
