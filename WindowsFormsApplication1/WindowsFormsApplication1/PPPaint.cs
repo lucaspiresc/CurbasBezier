@@ -15,19 +15,31 @@ namespace WindowsFormsApplication1
         Bitmap areaDesenho;
         Color corPreenche;
 
-        List<int> pontosX;
-        List<int> pontosY;
-        int totalPontos;
+        int? x1cubica = null;
+        int? x2cubica = null;
+        int? x3cubica = null;
+        int? x4cubica = null;
+
+        int? y1cubica = null;
+        int? y2cubica = null;
+        int? y3cubica = null;
+        int? y4cubica = null;
+
+        int? x1quadratica = null;
+        int? x2quadratica = null;
+        int? x3quadratica = null;
+
+        int? y1quadratica = null;
+        int? y2quadratica = null;
+        int? y3quadratica = null;
 
         bool escolhendoPontos, quadratica, cubica;
 
         public tela()
         {
-            InitializeComponent();            
+            InitializeComponent();
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
             corPreenche = Color.Black;
-
-            ResetaVariaveis();
         }
 
         /*
@@ -44,7 +56,7 @@ namespace WindowsFormsApplication1
         {
             DialogResult result = cdlg.ShowDialog();
             if (result == DialogResult.OK)
-            {                
+            {
                 corPreenche = cdlg.Color;
             }
         }
@@ -52,62 +64,31 @@ namespace WindowsFormsApplication1
         /*
          * Evento para tratar o clique no botão de apagar,
          * onde o usuário vai limpar o canvas completamente
-         */ 
+         */
         private void BtApagar_Click(object sender, EventArgs e)
         {
             //limpa o canvas
             areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
             imagem.Image = areaDesenho;
-
-            ResetaVariaveis();
         }
 
         /*
          * Evento para tratar o clique dentro do canvas,
          * onde serão salvas as coordenadas dos pontos incial e final
          * necessários para desenhar as formas
-         */ 
+         */
         private void Imagem_Click(object sender, MouseEventArgs e)
         {
             //Só computa cliques no canvas caso o usuario escolha um tipo de curva
             if (e.Button == MouseButtons.Left && escolhendoPontos)
             {
-                //Adiciona ponto na lista de pontos atuais, e desenha esse ponto no canvas
-                pontosX.Add(e.X);
-                pontosY.Add(e.Y);
-
-                totalPontos++;
-
-                areaDesenho.SetPixel(pontosX[totalPontos - 1], pontosY[totalPontos - 1], Color.Black);
-
-                imagem.Image = areaDesenho;
-
-                //Se o usuario escolheu quadratica e os 3 pontos,
-                //gera as retas delimitadoras e executa o algoritmo
-                if(totalPontos == 3 && quadratica)
+                if (quadratica)
                 {
-                    //Desenha as retas delimitadoras
-                    BresenhamReta(pontosX[totalPontos - 3], pontosY[totalPontos - 3], pontosX[totalPontos - 2], pontosY[totalPontos - 2], Color.Red);
-                    BresenhamReta(pontosX[totalPontos - 2], pontosY[totalPontos - 2], pontosX[totalPontos - 1], pontosY[totalPontos - 1], Color.Red);
-
-                    //Desenha a curva de Bezier
-                    BezierQuadratica(pontosX[totalPontos - 3], pontosY[totalPontos - 3], pontosX[totalPontos - 2], pontosY[totalPontos - 2], pontosX[totalPontos - 1], pontosY[totalPontos - 1], corPreenche);
-
-                    ResetaVariaveis();
+                    AdicionaPontosQuadratica(e.X, e.Y);
                 }
-                //Se o usuario escolheu cubica e os 4 pontos,
-                //gera as retas delimitadoras e executa o algoritmo
-                else if (totalPontos == 4 & cubica)
+                else if (cubica)
                 {
-                    //Desenha as retas delimitadoras
-                    BresenhamReta(pontosX[totalPontos - 4], pontosY[totalPontos - 4], pontosX[totalPontos - 3], pontosY[totalPontos - 3], Color.Red);
-                    BresenhamReta(pontosX[totalPontos - 3], pontosY[totalPontos - 3], pontosX[totalPontos - 2], pontosY[totalPontos - 2], Color.Red);
-                    BresenhamReta(pontosX[totalPontos - 2], pontosY[totalPontos - 2], pontosX[totalPontos - 1], pontosY[totalPontos - 1], Color.Red);
-
-                    //Desenha a curva de Bezier
-                    BezierCubica(pontosX[totalPontos - 4], pontosY[totalPontos - 4], pontosX[totalPontos - 3], pontosY[totalPontos - 3], pontosX[totalPontos - 2], pontosY[totalPontos - 2], pontosX[totalPontos - 1], pontosY[totalPontos - 1], corPreenche);
-
-                    ResetaVariaveis();
+                    AdicionaPontosCubica(e.X, e.Y);
                 }
             }
         }
@@ -123,10 +104,7 @@ namespace WindowsFormsApplication1
 
             escolhendoPontos = true;
             quadratica = true;
-
-            //Reinicia as listas de pontos
-            pontosX = new List<int>();
-            pontosY = new List<int>();
+            cubica = false;
         }
 
         /*
@@ -139,11 +117,306 @@ namespace WindowsFormsApplication1
             MessageBox.Show("Clique em 4 pontos na tela", "Ação necessária", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             escolhendoPontos = true;
+            quadratica = false;
             cubica = true;
-            // Reseta as listas de pontos
-            pontosX = new List<int>();
-            pontosY = new List<int>();
         }
+
+        #region Quadratica
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void quad_x1_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(quad_x1.Text, out a))
+            {
+                x1quadratica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                quad_x1.Text = x1quadratica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void quad_y1_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(quad_y1.Text, out a))
+            {
+                y1quadratica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                quad_y1.Text = y1quadratica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void quad_x2_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(quad_x2.Text, out a))
+            {
+                x2quadratica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                quad_x2.Text = x2quadratica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void quad_y2_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(quad_y2.Text, out a))
+            {
+                y2quadratica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                quad_y2.Text = y2quadratica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void quad_x3_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(quad_x3.Text, out a))
+            {
+                x3quadratica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                quad_x3.Text = x3quadratica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void quad_y3_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(quad_y3.Text, out a))
+            {
+                y3quadratica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                quad_y3.Text = y3quadratica.ToString();
+            }
+        }
+
+        /*
+         * Executa o algoritmo bezier quadratico se o usuario tiver os 3 pontos escolhidos
+         */
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (x1quadratica.HasValue && x2quadratica.HasValue && x3quadratica.HasValue
+                && y1quadratica.HasValue && y2quadratica.HasValue && y3quadratica.HasValue)
+            {
+                //limpa o canvas
+                areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
+                imagem.Image = areaDesenho;
+
+                //Desenha as retas delimitadoras
+                BresenhamReta(x1quadratica.Value, y1quadratica.Value, x2quadratica.Value, y2quadratica.Value, Color.Red);
+                BresenhamReta(x2quadratica.Value, y2quadratica.Value, x3quadratica.Value, y3quadratica.Value, Color.Red);
+
+                //Desenha a curva de Bezier
+                BezierQuadratica(x1quadratica.Value, y1quadratica.Value, x2quadratica.Value, y2quadratica.Value, x3quadratica.Value, y3quadratica.Value, corPreenche);
+            }
+            else
+            {
+                MessageBox.Show("Por favor escolha todos os pontos necessarios!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
+
+        #region Cubica
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_x1_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_x1.Text, out a))
+            {
+                x1cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_x1.Text = x1cubica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_y1_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_y1.Text, out a))
+            {
+                y1cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_y1.Text = y1cubica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_x2_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_x2.Text, out a))
+            {
+                x2cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_x2.Text = x2cubica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_y2_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_y2.Text, out a))
+            {
+                y2cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_y2.Text = y2cubica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_x3_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_x3.Text, out a))
+            {
+                x3cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_x3.Text = x3cubica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_y3_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_y3.Text, out a))
+            {
+                y3cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_y3.Text = y3cubica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_x4_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_x4.Text, out a))
+            {
+                x4cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_x4.Text = x4cubica.ToString();
+            }
+        }
+
+        /*
+         * Atualiza o valor do ponto quando o usuario altera na tela
+         */
+        private void cub_y4_TextChanged(object sender, EventArgs e)
+        {
+            int a;
+            if (Int32.TryParse(cub_y4.Text, out a))
+            {
+                y4cubica = a;
+            }
+            else
+            {
+                MessageBox.Show("Por favor digite um numero inteiro valido!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                cub_y4.Text = y4cubica.ToString();
+            }
+        }
+
+        /*
+         * Executa o algoritmo bezier cubico se o usuario tiver os 4 pontos escolhidos
+         */
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (x1cubica.HasValue && x2cubica.HasValue && x3cubica.HasValue && x4cubica.HasValue
+                && y1cubica.HasValue && y2cubica.HasValue && y3cubica.HasValue && y4cubica.HasValue)
+            {
+                //limpa o canvas
+                areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
+                imagem.Image = areaDesenho;
+                //Desenha as retas delimitadoras
+                BresenhamReta(x1cubica.Value, y1cubica.Value, x2cubica.Value, y2cubica.Value, Color.Red);
+                BresenhamReta(x2cubica.Value, y2cubica.Value, x3cubica.Value, y3cubica.Value, Color.Red);
+                BresenhamReta(x3cubica.Value, y3cubica.Value, x4cubica.Value, y4cubica.Value, Color.Red);
+
+                //Desenha a curva de Bezier
+                BezierCubica(x1cubica.Value, y1cubica.Value, x2cubica.Value, y2cubica.Value, x3cubica.Value, y3cubica.Value, x4cubica.Value, y4cubica.Value, corPreenche);
+            }
+            else
+            {
+                MessageBox.Show("Por favor escolha todos os pontos necessarios!", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Curvas Parametricas
@@ -193,7 +466,6 @@ namespace WindowsFormsApplication1
                 yInit = yFim;
             }
         }
-
 
         #endregion
 
@@ -300,20 +572,73 @@ namespace WindowsFormsApplication1
         }
 
         /*
-         * Reseta as variaveis apos a execucao de um algoritmo de curva,
-         * ara prepara-las para outra execucao
+         * Adiciona um ponto escolhido pelo usuario na ultima posicao disponivel
          */
-        public void ResetaVariaveis()
+        public void AdicionaPontosQuadratica(int x, int y)
         {
-            // Reseta as listas de pontos
-            pontosX = new List<int>();
-            pontosY = new List<int>();
+            if (x1quadratica == null && y1quadratica == null)
+            {
+                x1quadratica = x;
+                quad_x1.Text = x.ToString();
 
-            totalPontos = 0;
+                y1quadratica = y;
+                quad_y1.Text = y.ToString();
+            }
+            else if (x2quadratica == null && y2quadratica == null)
+            {
+                x2quadratica = x;
+                quad_x2.Text = x.ToString();
 
-            escolhendoPontos = false;
-            quadratica = false;
-            cubica = false;
+                y2quadratica = y;
+                quad_y2.Text = y.ToString();
+            }
+            else
+            {
+                x3quadratica = x;
+                quad_x3.Text = x.ToString();
+
+                y3quadratica = y;
+                quad_y3.Text = y.ToString();
+            }
+        }
+
+        /*
+         * Adiciona um ponto escolhido pelo usuario na ultima posicao disponivel
+         */
+        public void AdicionaPontosCubica(int x, int y)
+        {
+            if (x1cubica == null && y1cubica == null)
+            {
+                x1cubica = x;
+                cub_x1.Text = x.ToString();
+
+                y1cubica = y;
+                cub_y1.Text = y.ToString();
+            }
+            else if (x2cubica == null && y2cubica == null)
+            {
+                x2cubica = x;
+                cub_x2.Text = x.ToString();
+
+                y2cubica = y;
+                cub_y2.Text = y.ToString();
+            }
+            else if (x3cubica == null && y3cubica == null)
+            {
+                x3cubica = x;
+                cub_x3.Text = x.ToString();
+
+                y3cubica = y;
+                cub_y3.Text = y.ToString();
+            }
+            else
+            {
+                x4cubica = x;
+                cub_x4.Text = x.ToString();
+
+                y4cubica = y;
+                cub_y4.Text = y.ToString();
+            }
         }
         #endregion
     }
