@@ -94,6 +94,11 @@ namespace WindowsFormsApplication1
         }
 
         /*
+         * Regiao contendo eventos relacionados aos botoes especificos para bezier quadratico
+         */
+        #region Quadratica
+
+        /*
          * Evento para tratar o clique no botao do bezier quadratico, onde
          * sera necessario que o usuario escolha os pontos de controle antes
          * de executar o algoritmo
@@ -106,22 +111,6 @@ namespace WindowsFormsApplication1
             quadratica = true;
             cubica = false;
         }
-
-        /*
-         * Evento para tratar o clique no botao do bezier cubico, onde
-         * sera necessario que o usuario escolha os pontos de controle antes
-         * de executar o algoritmo
-         */
-        private void btn_Bz_Cub_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Clique em 4 pontos na tela", "Ação necessária", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            escolhendoPontos = true;
-            quadratica = false;
-            cubica = true;
-        }
-
-        #region Quadratica
 
         /*
          * Atualiza o valor do ponto quando o usuario altera na tela
@@ -252,7 +241,24 @@ namespace WindowsFormsApplication1
 
         #endregion
 
+        /*
+         * Regiao contendo eventos relacionados aos botoes especificos para bezier cubico
+         */
         #region Cubica
+
+        /*
+         * Evento para tratar o clique no botao do bezier cubico, onde
+         * sera necessario que o usuario escolha os pontos de controle antes
+         * de executar o algoritmo
+         */
+        private void btn_Bz_Cub_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Clique em 4 pontos na tela", "Ação necessária", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            escolhendoPontos = true;
+            quadratica = false;
+            cubica = true;
+        }
 
         /*
          * Atualiza o valor do ponto quando o usuario altera na tela
@@ -419,6 +425,9 @@ namespace WindowsFormsApplication1
 
         #endregion
 
+        /*
+         * Regiao contendo a implementacao dos metodos de curvas de Bezier Cubica e Quadratica
+         */
         #region Curvas Parametricas
 
         /*
