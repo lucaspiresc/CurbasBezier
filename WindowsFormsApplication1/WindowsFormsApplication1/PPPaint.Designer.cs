@@ -156,7 +156,7 @@
             this.btn_Bz_Cub.Name = "btn_Bz_Cub";
             this.btn_Bz_Cub.Size = new System.Drawing.Size(198, 23);
             this.btn_Bz_Cub.TabIndex = 8;
-            this.btn_Bz_Cub.Text = "Bezier Cubica";
+            this.btn_Bz_Cub.Text = "Escolher Pontos";
             this.btn_Bz_Cub.UseVisualStyleBackColor = true;
             this.btn_Bz_Cub.Click += new System.EventHandler(this.btn_Bz_Cub_Click);
             // 

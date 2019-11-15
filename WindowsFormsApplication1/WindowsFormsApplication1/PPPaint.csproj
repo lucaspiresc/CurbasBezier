@@ -54,9 +54,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\AlgoritmosRecorte.cs" />
-    <Compile Include="Util\AlgoritmosReta.cs" />
-    <Compile Include="Util\Direcoes.cs" />
     <EmbeddedResource Include="PPPaint.resx">
       <DependentUpon>PPPaint.cs</DependentUpon>
     </EmbeddedResource>

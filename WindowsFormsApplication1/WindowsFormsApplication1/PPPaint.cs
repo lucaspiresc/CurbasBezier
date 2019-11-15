@@ -1,11 +1,5 @@
-﻿using PPPaint.Util;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
@@ -67,9 +61,13 @@ namespace WindowsFormsApplication1
          */
         private void BtApagar_Click(object sender, EventArgs e)
         {
-            //limpa o canvas
-            areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
-            imagem.Image = areaDesenho;
+            this.Controls.Clear();
+            this.InitializeComponent();
+
+            ResetaPontos();
+            ////limpa o canvas
+            //areaDesenho = new Bitmap(imagem.Size.Width, imagem.Size.Height);
+            //imagem.Image = areaDesenho;
         }
 
         /*
@@ -441,7 +439,7 @@ namespace WindowsFormsApplication1
 
             int xFim, yFim;
 
-            for (double t = 0; t <= 1; t += 0.001)
+            for (double t = 0; t <= 1; t += 0.0001)
             {
                 xFim = Convert.ToInt32(Math.Pow((1 - t), 2) * x1 + 2 * t * (1 - t) * x2 + Math.Pow(t, 2) * x3);
                 yFim = Convert.ToInt32(Math.Pow((1 - t), 2) * y1 + 2 * t * (1 - t) * y2 + Math.Pow(t, 2) * y3);
@@ -464,7 +462,7 @@ namespace WindowsFormsApplication1
 
             int xFim, yFim;
 
-            for (double t = 0; t <= 1; t += 0.001)
+            for (double t = 0; t <= 1; t += 0.0001)
             {
                 xFim = Convert.ToInt32(Math.Pow((1 - t), 3) * x1 + 3 * t * Math.Pow((1 - t), 2) * x2 + 3 * (1 - t) * Math.Pow(t, 2) * x3 + Math.Pow(t, 3) * x4);
                 yFim = Convert.ToInt32(Math.Pow((1 - t), 3) * y1 + 3 * t * Math.Pow((1 - t), 2) * y2 + 3 * (1 - t) * Math.Pow(t, 2) * y3 + Math.Pow(t, 3) * y4);
@@ -601,7 +599,7 @@ namespace WindowsFormsApplication1
                 y2quadratica = y;
                 quad_y2.Text = y.ToString();
             }
-            else
+            else if (x3quadratica == null && y3quadratica == null)
             {
                 x3quadratica = x;
                 quad_x3.Text = x.ToString();
@@ -640,7 +638,7 @@ namespace WindowsFormsApplication1
                 y3cubica = y;
                 cub_y3.Text = y.ToString();
             }
-            else
+            else if (x4cubica == null && y4cubica == null)
             {
                 x4cubica = x;
                 cub_x4.Text = x.ToString();
@@ -648,6 +646,31 @@ namespace WindowsFormsApplication1
                 y4cubica = y;
                 cub_y4.Text = y.ToString();
             }
+        }
+
+        public void ResetaPontos()
+        {
+            x1cubica = null;
+            x2cubica = null;
+            x3cubica = null;
+            x4cubica = null;
+
+            y1cubica = null;
+            y2cubica = null;
+            y3cubica = null;
+            y4cubica = null;
+
+            x1quadratica = null;
+            x2quadratica = null;
+            x3quadratica = null;
+
+            y1quadratica = null;
+            y2quadratica = null;
+            y3quadratica = null;
+
+            escolhendoPontos = false;
+            cubica = false;
+            quadratica = false;
         }
         #endregion
     }
